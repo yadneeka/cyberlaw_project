@@ -1,7 +1,7 @@
 Effectiveness of Digital Safety Laws for Women in India (2024–2026)
 
 
-🔗 Click Here to Access the Live Dashboard
+🔗 Click Here to Access the Live Dashboard : https://cyberlawproject.streamlit.app/
 
 ⚖️ The Problem Statement: The "Enforcement Gap"
 Despite the rise in digital literacy and reporting mechanisms, a significant gap remains between cybercrime reporting and legal outcomes. This research analyzed 324,567 cases across 13 digital platforms to evaluate the effectiveness of the IT Act 2000 and BNS 2023.
