@@ -738,46 +738,36 @@ with ins3:
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 7 — DATA EXPLORER
 # ══════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════════
+
 st.markdown("""
 <div class="section-header">
     <span class="section-number">07 —</span>
     <p class="section-title">Data Explorer</p>
 </div>""", unsafe_allow_html=True)
 
-col_f1, col_f2, col_f3 = st.columns(3)
+# 1. Simplified layout with only two columns for filters
+col_f1, col_f2 = st.columns(2)
 with col_f1:
     platform_filter = st.selectbox("Filter by Platform",
                                    ["All Platforms"] + sorted(df["platform"].unique().tolist()))
 with col_f2:
     crime_filter = st.selectbox("Filter by Crime Type",
                                 ["All Crime Types"] + sorted(df["crime_category"].unique().tolist()))
-with col_f3:
-    sort_by = st.selectbox("Sort by",
-                           ["conviction_rate_pct ↓", "cases_reported ↓",
-                            "cases_convicted ↓", "cases_chargesheeted ↓"])
 
+# 2. Filter logic (removed sort_by logic)
 filtered = df.copy()
 if platform_filter != "All Platforms":
     filtered = filtered[filtered["platform"] == platform_filter]
 if crime_filter != "All Crime Types":
     filtered = filtered[filtered["crime_category"] == crime_filter]
-# Create a mapping of the UI Label to the actual Dataframe Column
-sort_lookup = {
-    "conviction_rate_pct ↓": "conviction_rate_pct",
-    "cases_reported ↓": "cases_reported",
-    "cases_convicted ↓": "cases_convicted",
-    "cases_chargesheeted ↓": "cases_chargesheeted"
-}
-
-# Safely retrieve the column name and sort
-sort_col = sort_lookup.get(sort_by, "conviction_rate_pct")
-filtered = filtered.sort_values(sort_col, ascending=False)
 
 st.markdown(f"""<div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:{MUTED};
                 margin-bottom:0.6rem;letter-spacing:0.06em;">
     Showing {len(filtered)} of {len(df)} rows
 </div>""", unsafe_allow_html=True)
 
+# 3. Display table
 display_df = filtered[[
     "platform","crime_category","cases_reported","cases_chargesheeted",
     "cases_convicted","conviction_rate_pct","laws_invoked"
@@ -787,8 +777,9 @@ display_df = filtered[[
     "cases_convicted":"Convicted","conviction_rate_pct":"Conv. Rate %",
     "laws_invoked":"Laws Invoked"
 })
+
 st.dataframe(
-    display_df, use_container_width=True, height=340,
+    display_df, use_container_width=True, height=400, # Increased height slightly
     column_config={
         "Conv. Rate %":  st.column_config.ProgressColumn("Conv. Rate %",  min_value=0, max_value=6, format="%.2f%%"),
         "Reported":      st.column_config.NumberColumn("Reported",      format="%d"),
@@ -796,8 +787,6 @@ st.dataframe(
         "Chargesheeted": st.column_config.NumberColumn("Chargesheeted", format="%d"),
     }
 )
-
-
 # ══════════════════════════════════════════════════════════════════════════════
 # FOOTER
 # ══════════════════════════════════════════════════════════════════════════════
