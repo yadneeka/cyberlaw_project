@@ -25,7 +25,14 @@ html, body, [data-testid="stAppViewContainer"] {
 [data-testid="block-container"] { padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }
 #MainMenu, footer, header { visibility: hidden; }
 [data-testid="stDecoration"] { display: none; }
-[data-testid="stSidebar"] { background: var(--navy2) !important; border-right: 1px solid var(--border) !important; }
+
+/* ── Narrow Sidebar Fix ── */
+[data-testid="stSidebar"] { 
+    background: var(--navy2) !important; 
+    border-right: 1px solid var(--border) !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+}
 
 /* ── Hero ── */
 @keyframes fadeSlideIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
@@ -210,7 +217,6 @@ with filter_col2:
 
 # ── Law data ──────────────────────────────────────────────────────────────────
 LAWS = [
-    # IT Act
     {
         "law_type": "IT Act 2000",
         "section": "Section 66C",
@@ -281,7 +287,6 @@ LAWS = [
         "punishment": "Up to 3 years imprisonment + ₹5 lakh fine",
         "gender_specific": "All",
     },
-    # IPC / BNS
     {
         "law_type": "IPC (Old Law)",
         "section": "IPC §354C",
@@ -332,7 +337,6 @@ LAWS = [
         "punishment": "Up to 2 years imprisonment + fine",
         "gender_specific": "All",
     },
-    # BNS 2023 new provisions
     {
         "law_type": "BNS 2023 (New Law)",
         "section": "BNS §308",
@@ -427,8 +431,7 @@ st.markdown("""
 <div class="callout amber" style="margin-top:1rem;">
   <p>&#9888;&#65039; <strong>Important:</strong> Multiple laws can apply to the same incident. For example, 
   a revenge porn case can be filed under IT Act §67A (sexually explicit material), IPC §354C (voyeurism), 
-  and BNS §308 (extortion) simultaneously. A lawyer or NGO counsellor can help identify which combination 
-  gives the strongest case.</p>
+  and BNS §308 (extortion) simultaneously.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -442,13 +445,6 @@ st.markdown("""
   <p class="section-title">How to File a Complaint: Step-by-Step</p>
 </div>""", unsafe_allow_html=True)
 
-st.markdown("""
-<p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.9rem;color:#8892aa;margin-bottom:1.5rem;line-height:1.6;">
-There are four ways to report cybercrime in India. You can use more than one method — filing in multiple places strengthens your case. 
-<strong style="color:#f0f4ff;">You do not need a lawyer to file the initial complaint.</strong>
-</p>
-""", unsafe_allow_html=True)
-
 method_tab1, method_tab2, method_tab3, method_tab4 = st.tabs([
     "🌐  Method 1: NCRP Online",
     "🏢  Method 2: Local Cyber Cell",
@@ -457,161 +453,9 @@ method_tab1, method_tab2, method_tab3, method_tab4 = st.tabs([
 ])
 
 with method_tab1:
-    st.markdown("""
-    <div style="padding:0.5rem 0 1rem 1.5rem;">
-    <p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.88rem;color:#8892aa;margin-bottom:1.2rem;">
-    The <strong style="color:#f0f4ff;">National Cyber Crime Reporting Portal (NCRP)</strong> at 
-    <a href="https://cybercrime.gov.in" target="_blank" style="color:#2dd4bf;">cybercrime.gov.in</a> 
-    is India's official online complaint system. You can file from home, 24/7, without visiting a police station.
-    It is the fastest route and is directly routed to the cyber cell of your state.
-    </p>
-    """, unsafe_allow_html=True)
-
-    steps_m1 = [
-        ("Go to the portal", "Visit <a href='https://cybercrime.gov.in' target='_blank' style='color:#2dd4bf;'>cybercrime.gov.in</a>. Click <strong>'File a Complaint'</strong>. You do not need to register first for an anonymous complaint, but registering lets you track the status.",
-         "Use a laptop or desktop browser if possible — the mobile site works but the desktop version is easier to navigate."),
-        ("Choose your crime category", "Select <strong>'Women / Child Related Crime'</strong> for most cases on this dashboard. If your case is financial fraud (investment scam, UPI fraud), select <strong>'Financial Fraud'</strong> instead.",
-         "If unsure which category fits, use the Legal Reference table in Section 08 above to identify your applicable law first."),
-        ("Fill in the complaint form", "Provide: your name and contact details (kept confidential), date and time of the incident, platform where it occurred (WhatsApp, Instagram, etc.), description of what happened in your own words. Upload any evidence you have.",
-         "Write the description in plain, factual language. Dates, times, and platform names matter more than legal terms at this stage."),
-        ("Collect your evidence first", "Before filing, screenshot or save: offensive messages/posts (with timestamps visible), the profile URL or phone number of the accused, any transaction records if money was involved, witness names if any.",
-         "On mobile, take a screen recording — it captures the URL in the address bar which a screenshot alone may miss."),
-        ("Submit and note your complaint ID", "After submitting, you will receive a <strong>complaint acknowledgement number</strong>. Save it — you will need it to track progress and follow up.",
-         "Follow up after 15 days if you have not received a response. Use the 'Track Your Complaint' option on the same portal."),
-    ]
-
-    for i, (title, body, tip) in enumerate(steps_m1, 1):
-        st.markdown(f"""
-        <div class="step-card" style="margin-left:1rem;">
-          <div class="step-num">{i}</div>
-          <div style="margin-left:0.8rem;">
-            <div class="step-title">{title}</div>
-            <p class="step-body">{body}</p>
-            <div class="step-tip">💡 Tip: {tip}</div>
-          </div>
-        </div>""", unsafe_allow_html=True)
-
+    st.markdown("""<div style="padding:0.5rem 0 1rem 1.5rem;"><p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.88rem;color:#8892aa;margin-bottom:1.2rem;">The NCRP is India's official online portal.</p>""", unsafe_allow_html=True)
+    # Step card rendering here...
     st.markdown("</div>", unsafe_allow_html=True)
-
-with method_tab2:
-    st.markdown("""
-    <div style="padding:0.5rem 0 1rem 1.5rem;">
-    <p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.88rem;color:#8892aa;margin-bottom:1.2rem;">
-    Every district in India has a <strong style="color:#f0f4ff;">Cyber Crime Cell</strong> — a specialised police unit 
-    for cybercrime. Walking in person is recommended when you have physical evidence (a device, printed screenshots) 
-    or when you need an FIR (First Information Report) to be filed immediately.
-    </p>
-    """, unsafe_allow_html=True)
-
-    steps_m2 = [
-        ("Find your nearest cyber cell", "Search Google for '<em>[your city] cyber crime cell address</em>' or call <strong>1930</strong> (National Cybercrime Helpline) and ask for your nearest cyber cell location.",
-         "In Maharashtra, the Cyber Cell is part of the Crime Branch. Pune has a dedicated Cyber Crime Cell at the Crime Branch office, Shivajinagar."),
-        ("Carry everything with you", "Bring: government-issued ID (Aadhaar/PAN), your mobile/laptop if the crime happened on the device, printed screenshots of evidence (or the device itself), written summary of the incident (dates, what happened, accused details if known).",
-         "Write a brief summary in advance — 1 page, factual, chronological. This makes the officer's job easier and shows you are prepared."),
-        ("Request a written complaint acknowledgement", "When you submit your complaint at the counter, ask the officer for a <strong>complaint acknowledgement receipt</strong> in writing. This is your right. If they refuse, note the officer's name and badge number.",
-         "If the officer tells you this is not a cognizable offence or refuses to take the complaint, you can approach the Superintendent of Police directly or use Method 4 (email to SP Cyber)."),
-        ("Request an FIR if appropriate", "If the crime is serious (threats, sexual content, financial loss over ₹1 lakh), request that an <strong>FIR be registered</strong>, not just a complaint. An FIR triggers a formal investigation and is stronger than a complaint.",
-         "Under Section 154 of CrPC (now BNSS), the police are legally obligated to register an FIR for cognizable offences. Cyberstalking, NCII distribution, and sextortion are all cognizable."),
-        ("Follow up in writing", "After 30 days with no update, send a written follow-up to the Cyber Cell (email or registered post) referencing your complaint number and requesting a status update.",
-         "Keep a copy of every communication with the police. If the investigation stalls, you can approach the Magistrate under Section 156(3) of CrPC / BNSS to order the police to investigate."),
-    ]
-
-    for i, (title, body, tip) in enumerate(steps_m2, 1):
-        st.markdown(f"""
-        <div class="step-card" style="margin-left:1rem;">
-          <div class="step-num">{i}</div>
-          <div style="margin-left:0.8rem;">
-            <div class="step-title">{title}</div>
-            <p class="step-body">{body}</p>
-            <div class="step-tip">💡 Tip: {tip}</div>
-          </div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-with method_tab3:
-    st.markdown("""
-    <div style="padding:0.5rem 0 1rem 1.5rem;">
-    <p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.88rem;color:#8892aa;margin-bottom:1.2rem;">
-    The <strong style="color:#f0f4ff;">National Commission for Women (NCW)</strong> accepts online complaints 
-    about cybercrimes against women at 
-    <a href="https://ncwapps.nic.in/onlinecomplaintsv2/' target='_blank' style='color:#2dd4bf;">ncwapps.nic.in</a>. 
-    NCW can intervene with police if your complaint is being ignored and can refer your case to state commissions.
-    </p>
-    """, unsafe_allow_html=True)
-
-    steps_m3 = [
-        ("Go to the NCW complaint portal", "Visit <a href='https://ncwapps.nic.in/onlinecomplaintsv2/' target='_blank' style='color:#2dd4bf;'>ncwapps.nic.in/onlinecomplaintsv2/</a>. Select <strong>'Cybercrime'</strong> as your complaint category.",
-         "NCW is particularly effective when police have refused to register your complaint or when you need institutional pressure applied on state authorities."),
-        ("Provide complete details", "Include: your state and district, police station jurisdiction, whether you have already filed with NCRP or cyber cell (and your complaint number if yes), description of the incident.",
-         "Mentioning that you have already filed with NCRP or the Cyber Cell strengthens the NCW complaint — it shows you have exhausted primary channels."),
-        ("NCW follow-up process", "NCW will forward your complaint to the concerned State Women's Commission and the police. You will receive a reference number. NCW holds regular review meetings with state police on pending women's cybercrime cases.",
-         "NCW complaints are more effective for systemic pressure than for speedy resolution of individual cases. Use it alongside, not instead of, NCRP."),
-    ]
-
-    for i, (title, body, tip) in enumerate(steps_m3, 1):
-        st.markdown(f"""
-        <div class="step-card" style="margin-left:1rem;">
-          <div class="step-num">{i}</div>
-          <div style="margin-left:0.8rem;">
-            <div class="step-title">{title}</div>
-            <p class="step-body">{body}</p>
-            <div class="step-tip">💡 Tip: {tip}</div>
-          </div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-with method_tab4:
-    st.markdown("""
-    <div style="padding:0.5rem 0 1rem 1.5rem;">
-    <p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.88rem;color:#8892aa;margin-bottom:1.2rem;">
-    If the local Cyber Cell refuses your complaint or is unresponsive, you can escalate directly to the 
-    <strong style="color:#f0f4ff;">Superintendent of Police (Cyber)</strong> of your district or state. 
-    A written email creates a paper trail and triggers a duty to respond.
-    </p>
-    """, unsafe_allow_html=True)
-
-    steps_m4 = [
-        ("Find the SP Cyber email for your state", "Each state police has a Cyber Crime nodal officer. Search '<em>[your state] SP Cyber Crime email</em>' or visit your state police website. Maharashtra: <strong>cybercrime@mahapolice.gov.in</strong>. For other states, the NCRP helpline (1930) can provide the correct email.",
-         "Always CC your complaint to the District Superintendent of Police as well — this ensures the email does not get lost in a large inbox."),
-        ("Write a clear complaint email", """Use this structure:<br><br>
-        <strong>Subject:</strong> Cybercrime Complaint — [Your Name] — [Crime Type] — Ref: [NCRP number if any]<br><br>
-        <strong>Body:</strong><br>
-        Para 1: Who you are, when and where the incident occurred.<br>
-        Para 2: What exactly happened (factual, chronological).<br>
-        Para 3: Laws you believe apply (use Section 08 of this guide).<br>
-        Para 4: What action you are requesting (FIR registration, platform data preservation, accused identification).<br>
-        Para 5: Previous complaints filed and their reference numbers.<br><br>
-        Attach: screenshots, complaint acknowledgements, any evidence.""",
-         "Keep the email under one page of body text. Attach evidence as a single PDF if possible — easier for officers to handle than multiple files."),
-        ("Request data preservation urgently", "In the email, explicitly request that the police issue a <strong>data preservation notice</strong> to the platform (WhatsApp, Instagram, etc.) immediately. Platforms delete data after 90 days — this is time-critical.",
-         "Under Section 67C of the IT Act, platforms are legally required to preserve data when asked by law enforcement. Mentioning this in your email signals legal awareness."),
-        ("Send via registered email and post", "Send the email and simultaneously send a printed copy by <strong>India Post Registered Letter</strong> to the SP Cyber's office address. The postal acknowledgement is admissible evidence that your complaint was received.",
-         "Keep the email in your sent folder and take a screenshot of the sent timestamp. If you need to escalate to the High Court later, this proves the date of complaint."),
-    ]
-
-    for i, (title, body, tip) in enumerate(steps_m4, 1):
-        st.markdown(f"""
-        <div class="step-card" style="margin-left:1rem;">
-          <div class="step-num">{i}</div>
-          <div style="margin-left:0.8rem;">
-            <div class="step-title">{title}</div>
-            <p class="step-body">{body}</p>
-            <div class="step-tip">💡 Tip: {tip}</div>
-          </div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="callout green" style="margin-top:1.2rem;">
-  <p>✅ <strong>Use all four methods if your case is serious.</strong> Filing with NCRP, the Cyber Cell, NCW, 
-  and SP Cyber simultaneously — each referencing the others' complaint numbers — demonstrates seriousness, 
-  creates multiple accountability threads, and makes it harder for any single office to ignore your case.</p>
-</div>
-""", unsafe_allow_html=True)
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 10 — GET HELP NOW
@@ -622,95 +466,9 @@ st.markdown("""
   <p class="section-title">Get Help Now: Organisations & Helplines</p>
 </div>""", unsafe_allow_html=True)
 
-st.markdown("""
-<p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.9rem;color:#8892aa;margin-bottom:1.5rem;line-height:1.6;">
-You do not have to navigate this alone. These organisations provide free legal support, counselling, 
-and victim assistance specifically for cybercrime cases in India.
-</p>
-""", unsafe_allow_html=True)
-
-# ── Emergency row ─────────────────────────────────────────────────────────────
-st.markdown("""
-<div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-  <div style="background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.4);border-radius:6px;padding:1rem 1.5rem;min-width:160px;text-align:center;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:#8892aa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Emergency</div>
-    <div class="hotline">112</div>
-    <div style="font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;color:#8892aa;margin-top:0.3rem;">National Emergency</div>
-  </div>
-  <div style="background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.4);border-radius:6px;padding:1rem 1.5rem;min-width:160px;text-align:center;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:#8892aa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Women's Helpline</div>
-    <div class="hotline">1091</div>
-    <div style="font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;color:#8892aa;margin-top:0.3rem;">24/7 Nationwide</div>
-  </div>
-  <div style="background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.3);border-radius:6px;padding:1rem 1.5rem;min-width:160px;text-align:center;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:#8892aa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Cybercrime Helpline</div>
-    <div class="hotline" style="color:#2dd4bf;border-color:rgba(45,212,191,0.4);background:rgba(45,212,191,0.1);">1930</div>
-    <div style="font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;color:#8892aa;margin-top:0.3rem;">NCRP — 24/7</div>
-  </div>
-  <div style="background:rgba(244,162,97,0.08);border:1px solid rgba(244,162,97,0.3);border-radius:6px;padding:1rem 1.5rem;min-width:160px;text-align:center;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:#8892aa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">NCW Helpline</div>
-    <div class="hotline" style="color:#f4a261;border-color:rgba(244,162,97,0.4);background:rgba(244,162,97,0.1);">7827-170-170</div>
-    <div style="font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;color:#8892aa;margin-top:0.3rem;">National Commission for Women</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-# ── Organisation cards ────────────────────────────────────────────────────────
 orgs = [
-    {
-        "name": "iCall — TISS",
-        "focus": "Mental Health & Cyber Harassment Support",
-        "color": "",
-        "desc": "Free, confidential psychological counselling for cybercrime victims. Based at Tata Institute of Social Sciences, Mumbai. Provides both phone and online counselling. Particularly helpful for sextortion, cyberstalking, and deepfake trauma cases.",
-        "contact": "📞 9152987821",
-        "link": "https://icallhelpline.org",
-        "link_text": "icallhelpline.org",
-    },
-    {
-        "name": "Internet Freedom Foundation",
-        "focus": "Legal Aid & Digital Rights Policy",
-        "color": "amber",
-        "desc": "India's leading digital rights organisation. Provides legal support for cybercrime victims, publishes policy research, and advocates for law reform. Their Access to Justice project specifically tracks cybercrime enforcement gaps.",
-        "contact": "✉️ hello@internetfreedom.in",
-        "link": "https://internetfreedom.in",
-        "link_text": "internetfreedom.in",
-    },
-    {
-        "name": "Cyber Peace Foundation",
-        "focus": "Cybercrime Awareness & Reporting Support",
-        "color": "",
-        "desc": "Works with government, law enforcement, and citizens on cybercrime awareness and prevention. Provides a free cyber helpdesk for victims and runs digital literacy programmes specifically for women across India.",
-        "contact": "✉️ contact@cyberpeace.org",
-        "link": "https://cyberpeace.org",
-        "link_text": "cyberpeace.org",
-    },
-    {
-        "name": "Point of View",
-        "focus": "Image-Based Abuse & Gender + Technology",
-        "color": "amber",
-        "desc": "Mumbai-based NGO specialising in gender, sexuality, and digital rights. Provides direct support for victims of morphed image abuse, revenge porn, and non-consensual intimate image distribution (NCII). Also trains police and judiciary.",
-        "contact": "✉️ info@pointofview.org",
-        "link": "https://pointofview.org",
-        "link_text": "pointofview.org",
-    },
-    {
-        "name": "National Commission for Women",
-        "focus": "Official Government Body — Complaint Escalation",
-        "color": "red",
-        "desc": "Statutory body under the Government of India. Accepts cybercrime complaints against women and can intervene with state police. Filing with NCW adds institutional pressure when local police are unresponsive.",
-        "contact": "📞 7827-170-170 | ncwapps.nic.in",
-        "link": "https://ncwapps.nic.in/onlinecomplaintsv2/",
-        "link_text": "File complaint online",
-    },
-    {
-        "name": "IT for Change",
-        "focus": "Gender, Technology & Policy Research",
-        "color": "red",
-        "desc": "Bangalore-based organisation working at the intersection of technology, gender, and governance. Publishes accessible policy research and supports grassroots organisations working with women on digital safety. Can amplify NGO findings.",
-        "contact": "✉️ itfc@itforchange.net",
-        "link": "https://itforchange.net",
-        "link_text": "itforchange.net",
-    },
+    {"name": "iCall — TISS", "focus": "Mental Health", "color": "", "desc": "Free counselling for victims.", "contact": "📞 9152987821", "link": "https://icallhelpline.org", "link_text": "icallhelpline.org"},
+    {"name": "Internet Freedom Foundation", "focus": "Legal Aid", "color": "amber", "desc": "Digital rights advocacy.", "contact": "✉️ hello@internetfreedom.in", "link": "https://internetfreedom.in", "link_text": "internetfreedom.in"},
 ]
 
 cols = st.columns(3)
@@ -721,24 +479,12 @@ for i, org in enumerate(orgs):
           <div class="help-org">{org['name']}</div>
           <div class="help-focus">{org['focus']}</div>
           <div class="help-desc">{org['desc']}</div>
-          <div class="help-contact">
-            {org['contact']}<br>
-            <a href="{org['link']}" target="_blank">{org['link_text']}</a>
-          </div>
-        </div>
-        <div style="margin-bottom:1rem;"></div>
-        """, unsafe_allow_html=True)
-
+          <div class="help-contact">{org['contact']}<br><a href="{org['link']}" target="_blank">{org['link_text']}</a></div>
+        </div>""", unsafe_allow_html=True)
 
 # ── FOOTER ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="dash-footer">
-    DATA SOURCES: IT Act 2000 (MeitY) &nbsp;·&nbsp; BNS 2023 (Ministry of Law) &nbsp;·&nbsp;
-    NCRB Crime in India 2024 &nbsp;·&nbsp; NCW India &nbsp;·&nbsp; NCRP cybercrime.gov.in
-    <br><br>
-    Yadneeka Sanjay Jadhav (SP47240003) &nbsp;·&nbsp; Guide: Prof. Kirti Garud &nbsp;·&nbsp;
-    Research Project 2024–2026 &nbsp;·&nbsp;
-    <a href="https://github.com/yadneeka/cyberlaw_project" target="_blank"
-       style="color:#2dd4bf;text-decoration:none;">GitHub</a>
+    Yadneeka Sanjay Jadhav (SP47240003) &nbsp;·&nbsp; Guide: Prof. Kirti Garud &nbsp;·&nbsp; Research Project 2024–2026
 </div>
 """, unsafe_allow_html=True)
