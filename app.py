@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+
 # ── Page config ────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Digital Safety Laws for Women in India",
