@@ -18,8 +18,7 @@ def inject_sidebar(active_page="dashboard"):
     dash_active = "nav-active" if active_page == "dashboard" else ""
     legal_active = "nav-active" if active_page == "legal" else ""
 
-    components.html(
-        """
+    components.html(f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,18 +40,20 @@ def inject_sidebar(active_page="dashboard"):
 }}
 
 body {{
-    margin:0;
+    margin: 0;
 }}
 
 #toggle-btn {{
     position: fixed;
     top: 14px;
     left: 14px;
-    z-index: 9999;
+    z-index: 10001; /* ALWAYS on top */
     background: var(--card);
     padding: 10px;
     border-radius: 6px;
     cursor: pointer;
+    display: block !important;
+    opacity: 1 !important;
 }}
 
 #sidebar {{
@@ -63,7 +64,7 @@ body {{
     height: 100%;
     background: var(--card);
     transition: left 0.3s ease;
-    z-index: 9998;
+    z-index: 10000;
     padding-top: 60px;
 }}
 
@@ -75,12 +76,14 @@ body {{
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
+    z-index: 9999;
     display: none;
-    z-index: 9997;
+    pointer-events: none;
 }}
 
 #overlay.show {{
     display: block;
+    pointer-events: auto;
 }}
 
 .nav a {{
@@ -129,12 +132,19 @@ function initSidebar() {{
     const overlay = document.getElementById("overlay");
     const themeToggle = document.getElementById("themeToggle");
 
-    if (!btn || !sidebar) return;
+    if (!btn || !sidebar || !overlay) return;
 
-    // Toggle sidebar
+    // Toggle logic (robust)
     btn.onclick = () => {{
-        sidebar.classList.toggle("open");
-        overlay.classList.toggle("show");
+        const isOpen = sidebar.classList.contains("open");
+
+        if (isOpen) {{
+            sidebar.classList.remove("open");
+            overlay.classList.remove("show");
+        }} else {{
+            sidebar.classList.add("open");
+            overlay.classList.add("show");
+        }}
     }};
 
     overlay.onclick = () => {{
@@ -142,16 +152,18 @@ function initSidebar() {{
         overlay.classList.remove("show");
     }};
 
-    // Theme
+    // Theme logic
     const saved = localStorage.getItem("theme") || "dark";
     document.documentElement.setAttribute("data-theme", saved);
-    themeToggle.checked = saved === "light";
+    if (themeToggle) {{
+        themeToggle.checked = saved === "light";
 
-    themeToggle.onchange = () => {{
-        const theme = themeToggle.checked ? "light" : "dark";
-        localStorage.setItem("theme", theme);
-        document.documentElement.setAttribute("data-theme", theme);
-    }};
+        themeToggle.onchange = () => {{
+            const theme = themeToggle.checked ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            document.documentElement.setAttribute("data-theme", theme);
+        }};
+    }}
 }
 
 // Smooth scroll
@@ -162,20 +174,17 @@ window.scrollToSection = function(id) {{
     }}
 }};
 
-// INIT (IMPORTANT)
+// Init after render
 setTimeout(initSidebar, 300);
 
 // Re-init after Streamlit rerender
 const observer = new MutationObserver(() => {{
     initSidebar();
 }});
-observer.observe(document.body, {{childList:true, subtree:true}});
+observer.observe(document.body, {{childList: true, subtree: true}});
 
 </script>
 
 </body>
 </html>
-""",
-        height=0,
-    )
-
+""", height=0)
