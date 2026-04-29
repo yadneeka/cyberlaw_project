@@ -17,7 +17,7 @@ st.set_page_config(
 from sidebar_component import inject_sidebar
 
 # Call this immediately after st.set_page_config
-inject_sidebar("dashboard") # or "legal guide"
+inject_sidebar(active_page="dashboard") # or "legal guide"
 
 # ── Global CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
