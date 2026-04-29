@@ -19,7 +19,7 @@ def inject_sidebar(active_page="dashboard"):
     legal_active = "nav-active" if active_page == "legal" else ""
 
     components.html(
-        f"""
+        """
 <!DOCTYPE html>
 <html>
 <head>
