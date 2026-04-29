@@ -1,8 +1,5 @@
 import streamlit as st
-from sidebar_component import inject_sidebar
 
-# Call this immediately after st.set_page_config
-inject_sidebar(active_page="dashboard") # or "legal guide"
 
 st.set_page_config(
     page_title="Legal Help Guide — Cyberlaw India",
@@ -10,6 +7,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+from sidebar_component import inject_sidebar
+
+# Call this immediately after st.set_page_config
+inject_sidebar(active_page="dashboard") # or "legal guide"
 
 # ── Shared CSS (same theme as app.py) ──────────────────────────────────────────
 st.markdown("""
