@@ -18,7 +18,7 @@ def inject_sidebar(active_page="dashboard"):
     dash_active = "nav-active" if active_page == "dashboard" else ""
     legal_active = "nav-active" if active_page == "legal" else ""
 
-    components.html(f"""
+    components.html("""
 <!DOCTYPE html>
 <html>
 <head>
