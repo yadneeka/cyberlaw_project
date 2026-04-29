@@ -154,6 +154,53 @@ html, body, [data-testid="stAppViewContainer"] {
 """, unsafe_allow_html=True)
 
 
+# ── SIDEBAR ────────────────────────────────────────────────────────────────────
+with st.sidebar:
+    st.markdown("""
+    <div style="padding:1.2rem 0 0.5rem 0;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
+                  color:#2dd4bf;letter-spacing:0.15em;text-transform:uppercase;
+                  margin-bottom:0.5rem;">Navigation</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;
+                  font-weight:700;color:#f0f4ff;margin-bottom:1.2rem;">Legal Help Guide</div>
+    </div>
+    <hr style="border-color:#1e2d4a;margin:0 0 1rem 0;">
+    """, unsafe_allow_html=True)
+
+    sections = [
+        ("08", "Know Your Rights", "#know-your-rights"),
+        ("09", "How to File a Complaint", "#how-to-file"),
+        ("10", "Get Help Now", "#get-help"),
+    ]
+    for num, label, _ in sections:
+        st.markdown(f"""
+        <div style="display:flex;align-items:center;gap:0.7rem;
+                    padding:0.55rem 0.6rem;border-radius:5px;margin-bottom:0.3rem;
+                    background:rgba(45,212,191,0.05);border:1px solid rgba(45,212,191,0.1);">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
+                       color:#2dd4bf;min-width:1.4rem;">{num}</span>
+          <span style="font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;
+                       color:#f0f4ff;">{label}</span>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("""
+    <hr style="border-color:#1e2d4a;margin:1.2rem 0 1rem 0;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;
+                color:#8892aa;line-height:1.7;">
+      🆘 <strong style="color:#e63946;">Emergency:</strong> 112<br>
+      👩 Women's Helpline: 1091<br>
+      🌐 Cyber Cell: 1930<br>
+      📋 NCW: 7827-170-170
+    </div>
+    <hr style="border-color:#1e2d4a;margin:1rem 0;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;
+                color:#8892aa;letter-spacing:0.04em;line-height:1.6;">
+      SP47240003 · Yadneeka Jadhav<br>
+      Guide: Prof. Kirti Garud<br>
+      Research Project 2024–2026
+    </div>
+    """, unsafe_allow_html=True)
+
 # ── HERO ───────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero-band">
@@ -380,48 +427,78 @@ st.markdown(f"""
   Showing {len(filtered_laws)} of {len(LAWS)} legal provisions
 </p>""", unsafe_allow_html=True)
 
-# ── Render table ──────────────────────────────────────────────────────────────
-table_rows = ""
-for law in filtered_laws:
-    gt_class = "all" if law["gender_specific"] == "All" else ""
-    bns_text = f'<span class="section-code bns-code">{law["bns_equiv"]}</span>' if law["bns_equiv"] != "—" else '<span style="color:#8892aa;font-size:0.75rem;">—</span>'
-    table_rows += f"""
-    <tr>
-      <td>
-        <span class="section-code">{law["section"]}</span><br>
-        <span style="font-size:0.72rem;color:#8892aa;font-family:'IBM Plex Mono',monospace;">BNS equiv: </span>{bns_text}
-      </td>
-      <td>
-        <strong style="color:#f0f4ff;">{law["crime"]}</strong><br>
-        <span style="color:#8892aa;font-size:0.8rem;">{law["law_type"]}</span>
-      </td>
-      <td>
-        <span style="color:#f0f4ff;">{law["plain_english"]}</span>
-        <br><br>
-        <span style="color:#8892aa;font-size:0.78rem;font-style:italic;">Examples: {law["examples"]}</span>
-      </td>
-      <td class="punish">{law["punishment"]}</td>
-      <td><span class="gender-tag {gt_class}">{law["gender_specific"]}</span></td>
-    </tr>"""
-
-st.markdown(f"""
-<div style="overflow-x:auto;">
-<table class="law-table">
-  <thead>
-    <tr>
-      <th style="min-width:140px;">Section</th>
-      <th style="min-width:180px;">Crime Type</th>
-      <th style="min-width:320px;">What It Means + Examples</th>
-      <th style="min-width:180px;">Maximum Punishment</th>
-      <th style="min-width:100px;">Applies To</th>
-    </tr>
-  </thead>
-  <tbody>
-    {table_rows}
-  </tbody>
-</table>
+# ── Render table using divs (Streamlit strips <table> tags) ───────────────────
+# Header row
+st.markdown("""
+<div style="display:grid;grid-template-columns:150px 200px 1fr 200px 110px;
+            gap:0;background:var(--navy3);border-radius:6px 6px 0 0;
+            border:1px solid var(--border);border-bottom:2px solid var(--teal);
+            padding:0.7rem 0.9rem;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
+              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Section</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
+              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Crime Type</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
+              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">What It Means + Examples</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
+              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Maximum Punishment</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
+              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);">Applies To</div>
 </div>
 """, unsafe_allow_html=True)
+
+for i, law in enumerate(filtered_laws):
+    gt_class = "all" if law["gender_specific"] == "All" else ""
+    bns_text = (
+        f'<span style="font-family:\'IBM Plex Mono\',monospace;font-size:0.75rem;color:#2dd4bf;font-weight:600;">{law["bns_equiv"]}</span>'
+        if law["bns_equiv"] != "—"
+        else '<span style="color:#8892aa;font-size:0.75rem;">—</span>'
+    )
+    row_bg = "rgba(26,37,64,0.5)" if i % 2 == 1 else "transparent"
+    gender_color = "#e63946" if law["gender_specific"] == "Women" else ("#f4a261" if law["gender_specific"] == "All" else "#2dd4bf")
+    gender_bg   = "rgba(230,57,70,0.15)" if law["gender_specific"] == "Women" else ("rgba(244,162,97,0.12)" if law["gender_specific"] == "All" else "rgba(45,212,191,0.1)")
+    gender_border= "rgba(230,57,70,0.35)" if law["gender_specific"] == "Women" else ("rgba(244,162,97,0.35)" if law["gender_specific"] == "All" else "rgba(45,212,191,0.4)")
+
+    st.markdown(f"""
+    <div style="display:grid;grid-template-columns:150px 200px 1fr 200px 110px;
+                gap:0;background:{row_bg};
+                border-left:1px solid var(--border);border-right:1px solid var(--border);
+                border-bottom:1px solid var(--border);
+                padding:0.75rem 0.9rem;
+                transition:background 0.15s;"
+         onmouseover="this.style.background='rgba(45,212,191,0.04)'"
+         onmouseout="this.style.background='{row_bg}'">
+      <div style="padding-right:0.8rem;vertical-align:top;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.78rem;
+                     color:#f4a261;font-weight:600;white-space:nowrap;">{law["section"]}</span><br>
+        <span style="font-size:0.68rem;color:#8892aa;font-family:'IBM Plex Mono',monospace;">BNS: </span>{bns_text}
+      </div>
+      <div style="padding-right:0.8rem;vertical-align:top;">
+        <strong style="color:#f0f4ff;font-family:'IBM Plex Sans',sans-serif;font-size:0.83rem;">{law["crime"]}</strong><br>
+        <span style="color:#8892aa;font-size:0.78rem;font-family:'IBM Plex Sans',sans-serif;">{law["law_type"]}</span>
+      </div>
+      <div style="padding-right:0.8rem;vertical-align:top;line-height:1.55;">
+        <span style="color:#f0f4ff;font-family:'IBM Plex Sans',sans-serif;font-size:0.83rem;">{law["plain_english"]}</span>
+        <br>
+        <span style="color:#8892aa;font-size:0.77rem;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">
+          Examples: {law["examples"]}
+        </span>
+      </div>
+      <div style="padding-right:0.8rem;font-size:0.78rem;color:#8892aa;
+                  font-family:'IBM Plex Sans',sans-serif;line-height:1.5;">{law["punishment"]}</div>
+      <div>
+        <span style="display:inline-block;background:{gender_bg};
+                     border:1px solid {gender_border};color:{gender_color};
+                     font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
+                     padding:0.12rem 0.45rem;border-radius:3px;white-space:nowrap;">
+          {law["gender_specific"]}
+        </span>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Closing border radius bottom
+st.markdown('<div style="height:6px;background:var(--navy3);border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;"></div>', unsafe_allow_html=True)
 
 st.markdown("""
 <div class="callout amber" style="margin-top:1rem;">
