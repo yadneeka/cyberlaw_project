@@ -1,124 +1,58 @@
 
-"""
-Shared custom sidebar + light/dark mode for the Cyberlaw India dashboard.
-Import and call inject_sidebar(active_page) at the TOP of each page.
-
-Usage:
-    from sidebar_component import inject_sidebar, THEME
-    inject_sidebar(active_page="dashboard")   # or "legal"
-"""
-
 import streamlit as st
 import streamlit.components.v1 as components
 
-
-# ─────────────────────────────────────────────────────────────
-# THEME CONSTANTS
-# ─────────────────────────────────────────────────────────────
 DARK = {
     "navy": "#0a0f1e",
     "navy2": "#111827",
     "navy3": "#1a2540",
-    "red": "#e63946",
-    "amber": "#f4a261",
     "teal": "#2dd4bf",
     "white": "#f0f4ff",
-    "muted": "#8892aa",
-    "border": "#1e2d4a",
-    "green": "#22c55e",
-}
-
-LIGHT = {
-    "navy": "#f4f6fb",
-    "navy2": "#e8edf5",
-    "navy3": "#dde4f0",
-    "red": "#c0202d",
-    "amber": "#b85c10",
-    "teal": "#0d9488",
-    "white": "#0f172a",
-    "muted": "#4a5568",
-    "border": "#c5cfe0",
-    "green": "#16a34a",
 }
 
 THEME = DARK
 
 
-# ─────────────────────────────────────────────────────────────
-# MAIN FUNCTION
-# ─────────────────────────────────────────────────────────────
-def inject_sidebar(active_page: str = "dashboard"):
-    # ── Fix default sidebar width & button ──
-    st.markdown(
-        f"""
-        <style>
-        [data-testid="stSidebar"] {{
-            min-width: 250px !important;
-            max-width: 250px !important;
-            background-color: {DARK['navy2']} !important;
-        }}
-        [data-testid="stSidebarCollapsedControl"] {{
-            display: flex !important;
-            z-index: 9999 !important;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # ── Inject JS safely (NO f-string conflicts) ──
-    components.html(
-        """
-        <script>
-        window.scrollToSection = function(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.scrollIntoView({behavior: 'smooth'});
-            }
-        };
-
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-        }
-
-        const saved = localStorage.getItem("theme") || "dark";
-        applyTheme(saved);
-        </script>
-        """,
-        height=0,
-    )
-
-    # ── Hide default sidebar ──
-    st.markdown(
-        """
-        <style>
-        [data-testid="stSidebar"] {display:none;}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+def inject_sidebar(active_page="dashboard"):
 
     dash_active = "nav-active" if active_page == "dashboard" else ""
     legal_active = "nav-active" if active_page == "legal" else ""
 
-    # ─────────────────────────────────────────────
-    # MAIN SIDEBAR HTML
-    # ─────────────────────────────────────────────
-    st.markdown(
+    components.html(
         f"""
+<!DOCTYPE html>
+<html>
+<head>
 <style>
+
 :root {{
     --sb-w: 260px;
-    --bg: #0a0f1e;
-    --card: #1a2540;
-    --text: #f0f4ff;
-    --muted: #8892aa;
-    --teal: #2dd4bf;
+    --bg: {DARK["navy"]};
+    --card: {DARK["navy3"]};
+    --text: {DARK["white"]};
+    --teal: {DARK["teal"]};
+}}
+
+[data-theme="light"] {{
+    --bg: #f4f6fb;
+    --card: #dde4f0;
+    --text: #0f172a;
+    --teal: #0d9488;
 }}
 
 body {{
-    background: var(--bg);
-    color: var(--text);
+    margin:0;
+}}
+
+#toggle-btn {{
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 9999;
+    background: var(--card);
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
 }}
 
 #sidebar {{
@@ -128,31 +62,30 @@ body {{
     width: var(--sb-w);
     height: 100%;
     background: var(--card);
-    transition: 0.3s;
-    z-index: 999;
+    transition: left 0.3s ease;
+    z-index: 9998;
+    padding-top: 60px;
 }}
 
 #sidebar.open {{
     left: 0;
 }}
 
-.toggle-btn {{
+#overlay {{
     position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-    cursor: pointer;
-    background: var(--card);
-    padding: 10px;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 9997;
 }}
 
-.nav {{
-    padding: 20px;
+#overlay.show {{
+    display: block;
 }}
 
 .nav a {{
     display: block;
-    padding: 10px;
+    padding: 12px;
     color: var(--text);
     text-decoration: none;
 }}
@@ -162,8 +95,12 @@ body {{
 }}
 
 </style>
+</head>
 
-<div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+<body>
+
+<div id="toggle-btn">☰</div>
+<div id="overlay"></div>
 
 <div id="sidebar">
     <div class="nav">
@@ -177,25 +114,68 @@ body {{
 
         <hr>
 
-        <label>
+        <label style="padding:10px; display:block;">
             Theme
-            <input type="checkbox" onchange="toggleTheme(this.checked)">
+            <input type="checkbox" id="themeToggle">
         </label>
     </div>
 </div>
 
 <script>
-function toggleSidebar() {{
-    document.getElementById("sidebar").classList.toggle("open");
-}}
 
-function toggleTheme(isLight) {{
-    const theme = isLight ? "light" : "dark";
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-}}
+function initSidebar() {{
+    const btn = document.getElementById("toggle-btn");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (!btn || !sidebar) return;
+
+    // Toggle sidebar
+    btn.onclick = () => {{
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+    }};
+
+    overlay.onclick = () => {{
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+    }};
+
+    // Theme
+    const saved = localStorage.getItem("theme") || "dark";
+    document.documentElement.setAttribute("data-theme", saved);
+    themeToggle.checked = saved === "light";
+
+    themeToggle.onchange = () => {{
+        const theme = themeToggle.checked ? "light" : "dark";
+        localStorage.setItem("theme", theme);
+        document.documentElement.setAttribute("data-theme", theme);
+    }};
+}
+
+// Smooth scroll
+window.scrollToSection = function(id) {{
+    const el = window.parent.document.getElementById(id);
+    if (el) {{
+        el.scrollIntoView({{behavior: "smooth"}});
+    }}
+}};
+
+// INIT (IMPORTANT)
+setTimeout(initSidebar, 300);
+
+// Re-init after Streamlit rerender
+const observer = new MutationObserver(() => {{
+    initSidebar();
+}});
+observer.observe(document.body, {{childList:true, subtree:true}});
+
 </script>
-        """,
-        unsafe_allow_html=True,
+
+</body>
+</html>
+""",
+        height=0,
     )
 
