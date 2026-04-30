@@ -1,209 +1,177 @@
 import streamlit as st
-from sidebar_component import inject_sidebar
+from navbar import top_nav
 
 st.set_page_config(
     page_title="Legal Help Guide — Cyberlaw India",
     page_icon="🛡️",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
-# Call this immediately after st.set_page_config
-inject_sidebar(active_page="dashboard") # or "legal guide"
+theme = top_nav("legal")
 
-# ── Shared CSS (same theme as app.py) ──────────────────────────────────────────
-st.markdown("""
+if theme == "dark":
+    bg = "#0a0f1e"; text = "#f0f4ff"
+else:
+    bg = "#f4f6fb"; text = "#0f172a"
+
+# ── Shared CSS (theme-aware) ──────────────────────────────────────────────────
+if theme == "dark":
+    _bg2 = "#0a0f1e"; _navy2 = "#111827"; _navy3 = "#1a2540"
+    _text2 = "#f0f4ff"; _muted2 = "#8892aa"; _border2 = "#1e2d4a"
+    _card_bg2 = "linear-gradient(135deg, #0d1628 0%, #0a0f1e 100%)"
+    _teal2 = "#2dd4bf"
+else:
+    _bg2 = "#f4f6fb"; _navy2 = "#eef1f7"; _navy3 = "#ffffff"
+    _text2 = "#0f172a"; _muted2 = "#64748b"; _border2 = "#cbd5e1"
+    _card_bg2 = "linear-gradient(135deg, #eef1f7 0%, #f4f6fb 100%)"
+    _teal2 = "#0d9488"
+
+st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
-:root {
-    --navy:   #0a0f1e; --navy2:  #111827; --navy3:  #1a2540;
-    --red:    #e63946; --amber:  #f4a261; --teal:   #2dd4bf;
-    --white:  #f0f4ff; --muted:  #8892aa; --border: #1e2d4a;
+:root {{
+    --navy:   {_bg2}; --navy2: {_navy2}; --navy3: {_navy3};
+    --red:    #e63946; --amber: #f4a261; --teal:  {_teal2};
+    --white:  {_text2}; --muted: {_muted2}; --border: {_border2};
     --green:  #22c55e;
-}
-html, body, [data-testid="stAppViewContainer"] {
+}}
+html, body, [data-testid="stAppViewContainer"] {{
     background-color: var(--navy) !important; color: var(--white) !important;
-}
-[data-testid="stAppViewContainer"] > .main { background-color: var(--navy) !important; }
-[data-testid="block-container"] { padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }
-#MainMenu, footer, header { visibility: hidden; }
-[data-testid="stDecoration"] { display: none; }
-[data-testid="stSidebar"] { background: var(--navy2) !important; border-right: 1px solid var(--border) !important; }
+}}
+[data-testid="stAppViewContainer"] > .main {{ background-color: var(--navy) !important; }}
+[data-testid="block-container"] {{ padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }}
+#MainMenu, footer, header {{ visibility: hidden; }}
+[data-testid="stDecoration"] {{ display: none; }}
 
 /* ── Hero ── */
-@keyframes fadeSlideIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-.hero-band {
-    background: linear-gradient(135deg, #0d1628 0%, #0a0f1e 100%);
+@keyframes fadeSlideIn {{ from {{ opacity:0; transform:translateY(18px); }} to {{ opacity:1; transform:translateY(0); }} }}
+.hero-band {{
+    background: {_card_bg2};
     border: 1px solid var(--border); border-left: 4px solid var(--teal);
     padding: 2.4rem 2.2rem; margin-bottom: 2rem; border-radius: 6px;
     animation: fadeSlideIn 0.7s ease both; position: relative; overflow: hidden;
-}
-.hero-band::after {
+}}
+.hero-band::after {{
     content: '🛡'; position: absolute; right: 2rem; top: 50%;
     transform: translateY(-50%); font-size: 6rem; opacity: 0.06; pointer-events: none;
-}
+}}
 
 /* ── Section headers ── */
-.section-header {
+.section-header {{
     display: flex; align-items: baseline; gap: 1rem;
     margin: 3rem 0 1.2rem 0; padding-bottom: 0.7rem;
     border-bottom: 1px solid var(--border);
-}
-.section-number { font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--teal); letter-spacing:0.1em; }
-.section-title  { font-family:'Playfair Display',serif !important; font-size:1.4rem; font-weight:700; color:var(--white); margin:0; }
+}}
+.section-number {{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--teal); letter-spacing:0.1em; }}
+.section-title  {{ font-family:'Playfair Display',serif !important; font-size:1.4rem; font-weight:700; color:var(--white); margin:0; }}
 
 /* ── Law table ── */
-.law-table { width:100%; border-collapse:collapse; margin-top:0.5rem; }
-.law-table th {
+.law-table {{ width:100%; border-collapse:collapse; margin-top:0.5rem; }}
+.law-table th {{
     background:var(--navy3); color:var(--teal);
     font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em;
     text-transform:uppercase; padding:0.7rem 0.9rem; border-bottom:2px solid var(--teal);
     text-align:left;
-}
-.law-table td {
+}}
+.law-table td {{
     padding:0.75rem 0.9rem; border-bottom:1px solid var(--border);
     font-family:'IBM Plex Sans',sans-serif; font-size:0.83rem;
     color:var(--white); vertical-align:top; line-height:1.55;
-}
-.law-table tr:hover td { background:rgba(45,212,191,0.04); }
-.law-table tr:nth-child(even) td { background:rgba(26,37,64,0.5); }
-.law-table tr:nth-child(even):hover td { background:rgba(45,212,191,0.06); }
-.section-code {
+}}
+.law-table tr:hover td {{ background:rgba(45,212,191,0.04); }}
+.law-table tr:nth-child(even) td {{ background:rgba(26,37,64,0.5); }}
+.law-table tr:nth-child(even):hover td {{ background:rgba(45,212,191,0.06); }}
+.section-code {{
     font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
     color:var(--amber); font-weight:600; white-space:nowrap;
-}
-.bns-code { color: var(--teal); }
-.gender-tag {
+}}
+.bns-code {{ color: var(--teal); }}
+.gender-tag {{
     display:inline-block; background:rgba(230,57,70,0.15);
     border:1px solid rgba(230,57,70,0.35); color:var(--red);
     font-family:'IBM Plex Mono',monospace; font-size:0.6rem;
     padding:0.12rem 0.45rem; border-radius:3px; white-space:nowrap;
-}
-.gender-tag.all {
+}}
+.gender-tag.all {{
     background:rgba(244,162,97,0.12); border-color:rgba(244,162,97,0.35); color:var(--amber);
-}
-.punish { font-size:0.78rem; color:var(--muted); }
+}}
+.punish {{ font-size:0.78rem; color:var(--muted); }}
 
 /* ── Step cards ── */
-.step-card {
+.step-card {{
     background:var(--navy3); border:1px solid var(--border);
     border-radius:8px; padding:1.4rem 1.5rem; margin-bottom:1.1rem;
     position:relative; transition:border-color 0.2s, transform 0.2s;
-}
-.step-card:hover { border-color:var(--teal); transform:translateX(4px); }
-.step-num {
+}}
+.step-card:hover {{ border-color:var(--teal); transform:translateX(4px); }}
+.step-num {{
     position:absolute; top:1.2rem; left:-1rem;
     width:2rem; height:2rem; border-radius:50%;
     background:var(--teal); color:var(--navy);
     font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:0.85rem;
     display:flex; align-items:center; justify-content:center;
-}
-.step-title {
+}}
+.step-title {{
     font-family:'IBM Plex Mono',monospace; font-size:0.7rem;
     text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:0.4rem;
-}
-.step-body {
+}}
+.step-body {{
     font-family:'IBM Plex Sans',sans-serif; font-size:0.85rem;
     color:var(--white); line-height:1.65; margin:0;
-}
-.step-body a { color:var(--teal); text-decoration:none; }
-.step-body a:hover { text-decoration:underline; }
-.step-tip {
+}}
+.step-body a {{ color:var(--teal); text-decoration:none; }}
+.step-body a:hover {{ text-decoration:underline; }}
+.step-tip {{
     margin-top:0.6rem; padding:0.5rem 0.8rem;
     background:rgba(45,212,191,0.07); border-left:3px solid var(--teal);
     border-radius:0 4px 4px 0;
     font-family:'IBM Plex Sans',sans-serif; font-size:0.78rem; color:var(--muted);
-}
+}}
 
 /* ── Help cards ── */
-.help-card {
+.help-card {{
     background:var(--navy3); border:1px solid var(--border);
     border-top:3px solid var(--teal); border-radius:6px;
     padding:1.4rem 1.3rem; height:100%;
     transition:transform 0.2s, box-shadow 0.2s;
-}
-.help-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.35); }
-.help-card.amber { border-top-color:var(--amber); }
-.help-card.red   { border-top-color:var(--red); }
-.help-org  { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }
-.help-focus{ font-family:'IBM Plex Mono',monospace; font-size:0.63rem; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.7rem; }
-.help-desc { font-family:'IBM Plex Sans',sans-serif; font-size:0.82rem; color:var(--muted); line-height:1.55; margin-bottom:0.9rem; }
-.help-contact { font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--white); }
-.help-contact a { color:var(--teal); text-decoration:none; }
-.hotline {
+}}
+.help-card:hover {{ transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.2); }}
+.help-card.amber {{ border-top-color:var(--amber); }}
+.help-card.red   {{ border-top-color:var(--red); }}
+.help-org  {{ font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }}
+.help-focus{{ font-family:'IBM Plex Mono',monospace; font-size:0.63rem; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.7rem; }}
+.help-desc {{ font-family:'IBM Plex Sans',sans-serif; font-size:0.82rem; color:var(--muted); line-height:1.55; margin-bottom:0.9rem; }}
+.help-contact {{ font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--white); }}
+.help-contact a {{ color:var(--teal); text-decoration:none; }}
+.hotline {{
     display:inline-block; background:rgba(230,57,70,0.15);
     border:1px solid rgba(230,57,70,0.4); color:var(--red);
     font-family:'IBM Plex Mono',monospace; font-size:0.95rem; font-weight:700;
     padding:0.3rem 0.8rem; border-radius:4px; margin-top:0.4rem;
     letter-spacing:0.05em;
-}
+}}
 
 /* ── Callout ── */
-.callout {
+.callout {{
     background:rgba(230,57,70,0.08); border-left:4px solid var(--red);
     padding:1rem 1.2rem; border-radius:0 6px 6px 0; margin:0.8rem 0;
-}
-.callout.teal  { background:rgba(45,212,191,0.07);  border-left-color:var(--teal); }
-.callout.amber { background:rgba(244,162,97,0.07);  border-left-color:var(--amber); }
-.callout.green { background:rgba(34,197,94,0.07);   border-left-color:var(--green); }
-.callout p { margin:0; font-size:0.87rem; color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; }
+}}
+.callout.teal  {{ background:rgba(45,212,191,0.07);  border-left-color:var(--teal); }}
+.callout.amber {{ background:rgba(244,162,97,0.07);  border-left-color:var(--amber); }}
+.callout.green {{ background:rgba(34,197,94,0.07);   border-left-color:var(--green); }}
+.callout p {{ margin:0; font-size:0.87rem; color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; }}
 
-.dash-footer {
+.dash-footer {{
     margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--border);
     font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
     color:var(--muted); letter-spacing:0.06em; text-align:center;
-}
+}}
 </style>
 """, unsafe_allow_html=True)
 
 
-# ── SIDEBAR ────────────────────────────────────────────────────────────────────
-with st.sidebar:
-    st.markdown("""
-    <div style="padding:1.2rem 0 0.5rem 0;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
-                  color:#2dd4bf;letter-spacing:0.15em;text-transform:uppercase;
-                  margin-bottom:0.5rem;">Navigation</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;
-                  font-weight:700;color:#f0f4ff;margin-bottom:1.2rem;">Legal Help Guide</div>
-    </div>
-    <hr style="border-color:#1e2d4a;margin:0 0 1rem 0;">
-    """, unsafe_allow_html=True)
-
-    sections = [
-        ("08", "Know Your Rights", "#know-your-rights"),
-        ("09", "How to File a Complaint", "#how-to-file"),
-        ("10", "Get Help Now", "#get-help"),
-    ]
-    for num, label, _ in sections:
-        st.markdown(f"""
-        <div style="display:flex;align-items:center;gap:0.7rem;
-                    padding:0.55rem 0.6rem;border-radius:5px;margin-bottom:0.3rem;
-                    background:rgba(45,212,191,0.05);border:1px solid rgba(45,212,191,0.1);">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
-                       color:#2dd4bf;min-width:1.4rem;">{num}</span>
-          <span style="font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;
-                       color:#f0f4ff;">{label}</span>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("""
-    <hr style="border-color:#1e2d4a;margin:1.2rem 0 1rem 0;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;
-                color:#8892aa;line-height:1.7;">
-      🆘 <strong style="color:#e63946;">Emergency:</strong> 112<br>
-      👩 Women's Helpline: 1091<br>
-      🌐 Cyber Cell: 1930<br>
-      📋 NCW: 7827-170-170
-    </div>
-    <hr style="border-color:#1e2d4a;margin:1rem 0;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;
-                color:#8892aa;letter-spacing:0.04em;line-height:1.6;">
-      SP47240003 · Yadneeka Jadhav<br>
-      Guide: Prof. Kirti Garud<br>
-      Research Project 2024–2026
-    </div>
-    """, unsafe_allow_html=True)
 
 # ── HERO ───────────────────────────────────────────────────────────────────────
 st.markdown("""

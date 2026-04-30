@@ -1,0 +1,99 @@
+import streamlit as st
+
+
+def top_nav(active_page="dashboard"):
+
+    APP_NAME = "CyberLytics"
+    TAGLINE = "Turning cyberlaw data into actionable insights"
+
+    # ── COLORS ─────────────────────────
+    bg = "#0b1220"
+    text = "#e6edf7"
+    muted = "#94a3b8"
+    accent = "#22c55e"
+    pill = "rgba(34,197,94,0.12)"
+
+    # ── GLOBAL STYLE ───────────────────
+    st.markdown(f"""
+    <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+
+    html, body {{
+        background: {bg};
+        color: {text};
+        font-family: 'Inter', sans-serif;
+    }}
+
+    /* NAV BUTTON */
+    div.stButton > button {{
+        background: transparent !important;
+        border: none !important;
+        color: {muted} !important;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }}
+
+    div.stButton > button:hover {{
+        color: {text} !important;
+        background: rgba(255,255,255,0.04);
+    }}
+
+    /* ACTIVE PILL */
+    .active div.stButton > button {{
+        background: {pill} !important;
+        color: {accent} !important;
+        font-weight: 600;
+        box-shadow: 0 0 10px rgba(34,197,94,0.25);
+    }}
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    # ── LAYOUT ─────────────────────────
+    left, center, right = st.columns([5, 4, 1])
+
+    # ── BRAND (BIGGER + CLEAN LOGO) ────
+    with left:
+
+        l1, l2 = st.columns([1, 6])
+
+        # NEW CLEAN LOGO (CHIC)
+        with l1:
+            st.markdown(f"""
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12L12 4L20 12L12 20Z" stroke="{text}" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="2.5" fill="{text}"/>
+            </svg>
+            """, unsafe_allow_html=True)
+
+        with l2:
+            st.markdown(f"<div style='font-size:20px; font-weight:600'>{APP_NAME}</div>", unsafe_allow_html=True)
+            st.markdown(
+                f"<div style='color:{muted}; font-size:12px; font-family:JetBrains Mono'>{TAGLINE}</div>",
+                unsafe_allow_html=True
+            )
+
+    # ── CENTER NAV (PILL STYLE) ────────
+    with center:
+
+        c1, c2 = st.columns([1, 1])
+
+        # DASHBOARD ICON (SVG)
+        with c1:
+            st.markdown(f'<div class="{"active" if active_page=="dashboard" else ""}">', unsafe_allow_html=True)
+            if st.button("Dashboard"):
+                st.switch_page("app.py")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # LEGAL HELP ICON (SVG)
+        with c2:
+            st.markdown(f'<div class="{"active" if active_page=="legal" else ""}">', unsafe_allow_html=True)
+            if st.button("Legal Help"):
+                st.switch_page("pages/2_Legal_Help_Guide.py")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+    return "dark"
