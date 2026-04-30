@@ -57,12 +57,27 @@ st.markdown(f"""
 html, body, [data-testid="stAppViewContainer"] {{
     background-color: var(--navy) !important;
     color: var(--white) !important;
+    -webkit-text-size-adjust: 100%;
 }}
 [data-testid="stAppViewContainer"] > .main {{ background-color: var(--navy) !important; }}
-[data-testid="block-container"] {{ padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }}
+[data-testid="block-container"] {{
+    padding: 0 0.75rem 4rem 0.75rem !important;
+    max-width: 1400px !important;
+}}
+@media (min-width: 640px) {{
+    [data-testid="block-container"] {{
+        padding: 0 1.5rem 4rem 1.5rem !important;
+    }}
+}}
+@media (min-width: 1024px) {{
+    [data-testid="block-container"] {{
+        padding: 0 2rem 4rem 2rem !important;
+    }}
+}}
 #MainMenu, footer, header {{ visibility: hidden; }}
 [data-testid="stDecoration"] {{ display: none; }}
 
+/* ── HERO ── */
 @keyframes fadeSlideIn {{
     from {{ opacity: 0; transform: translateY(18px); }}
     to   {{ opacity: 1; transform: translateY(0); }}
@@ -71,8 +86,8 @@ html, body, [data-testid="stAppViewContainer"] {{
     background: {_card_bg};
     border: 1px solid var(--border);
     border-left: 4px solid var(--red);
-    padding: 2.6rem 2.2rem;
-    margin-bottom: 2rem;
+    padding: clamp(1.1rem, 4vw, 2.6rem) clamp(1rem, 3vw, 2.2rem);
+    margin-bottom: 1.5rem;
     border-radius: 6px;
     animation: fadeSlideIn 0.7s ease both;
     position: relative;
@@ -80,11 +95,16 @@ html, body, [data-testid="stAppViewContainer"] {{
 }}
 .hero-band::after {{
     content: '⚖';
-    position: absolute; right: 2rem; top: 50%;
+    position: absolute; right: 1.5rem; top: 50%;
     transform: translateY(-50%);
-    font-size: 7rem; opacity: 0.04; pointer-events: none;
+    font-size: clamp(3rem, 10vw, 7rem); opacity: 0.04; pointer-events: none;
+}}
+.hero-band h1 {{
+    font-size: clamp(1.35rem, 4.5vw, 2.2rem) !important;
+    line-height: 1.25 !important;
 }}
 
+/* ── METRIC CARDS ── */
 @keyframes cardIn {{
     from {{ opacity: 0; transform: translateY(12px); }}
     to   {{ opacity: 1; transform: translateY(0); }}
@@ -93,15 +113,16 @@ html, body, [data-testid="stAppViewContainer"] {{
     background: var(--navy3);
     border: 1px solid var(--border);
     border-top: 3px solid var(--red);
-    padding: 1.6rem 1.4rem 1.2rem;
+    padding: clamp(1rem, 3vw, 1.6rem) clamp(0.9rem, 2vw, 1.4rem) 1rem;
     border-radius: 6px;
     position: relative; overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     animation: cardIn 0.5s ease both;
     cursor: default;
+    height: 100%;
 }}
 .metric-card:hover {{
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.2);
     border-color: var(--muted);
 }}
@@ -118,82 +139,153 @@ html, body, [data-testid="stAppViewContainer"] {{
 
 .metric-label {{
     font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.65rem; letter-spacing: 0.13em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 0.5rem;
+    font-size: clamp(0.58rem, 1.5vw, 0.65rem);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.4rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }}
 .metric-value {{
     font-family: 'Playfair Display', serif !important;
-    font-size: 2.8rem; font-weight: 900; color: var(--red);
-    line-height: 1; margin-bottom: 0.4rem;
+    font-size: clamp(1.7rem, 4vw, 2.8rem) !important;
+    font-weight: 900; color: var(--red);
+    line-height: 1; margin-bottom: 0.35rem;
 }}
 .metric-value.teal  {{ color: var(--teal); }}
 .metric-value.amber {{ color: var(--amber); }}
 .metric-value.white {{ color: var(--white); }}
 .metric-sub {{
     font-family: 'IBM Plex Sans', sans-serif !important;
-    font-size: 0.77rem; color: var(--muted); line-height: 1.4;
+    font-size: clamp(0.7rem, 1.8vw, 0.77rem);
+    color: var(--muted); line-height: 1.4;
 }}
 
+/* ── SECTION HEADERS ── */
 .section-header {{
-    display: flex; align-items: baseline; gap: 1rem;
-    margin: 3rem 0 1.2rem 0; padding-bottom: 0.7rem;
+    display: flex; align-items: baseline; gap: 0.75rem;
+    margin: clamp(1.8rem, 5vw, 3rem) 0 1rem 0;
+    padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--border);
 }}
-.section-number {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--red); letter-spacing: 0.1em; }}
-.section-title  {{ font-family: 'Playfair Display', serif !important; font-size: 1.4rem; font-weight: 700; color: var(--white); margin: 0; }}
+.section-number {{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.62rem, 1.5vw, 0.7rem);
+    color: var(--red); letter-spacing: 0.1em;
+    white-space: nowrap;
+}}
+.section-title  {{
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(1.05rem, 3vw, 1.4rem) !important;
+    font-weight: 700; color: var(--white); margin: 0;
+}}
 
+/* ── CALLOUTS ── */
 @keyframes pulse-border {{
     0%, 100% {{ border-left-color: var(--red); }}
     50%       {{ border-left-color: rgba(230,57,70,0.4); }}
 }}
 .callout {{
     background: rgba(230,57,70,0.08); border-left: 4px solid var(--red);
-    padding: 1rem 1.2rem; border-radius: 0 6px 6px 0; margin: 0.8rem 0;
+    padding: 0.9rem 1rem; border-radius: 0 6px 6px 0; margin: 0.8rem 0;
     animation: pulse-border 3s ease infinite;
 }}
-.callout p {{ margin: 0; font-size: 0.88rem; color: var(--white); line-height: 1.6; font-family: 'IBM Plex Sans', sans-serif !important; }}
+.callout p {{
+    margin: 0;
+    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
+    color: var(--white); line-height: 1.6;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+}}
 .callout.teal  {{ background: rgba(45,212,191,0.07);  border-left-color: var(--teal);  animation: none; }}
 .callout.amber {{ background: rgba(244,162,97,0.07);  border-left-color: var(--amber); animation: none; }}
 
+/* ── TAGS ── */
 .tag {{
     display: inline-block;
     background: rgba(230,57,70,0.12); border: 1px solid rgba(230,57,70,0.3);
     color: var(--red); font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.08em;
-    padding: 0.22rem 0.65rem; border-radius: 3px;
-    margin-right: 0.4rem; margin-bottom: 0.4rem;
+    font-size: clamp(0.58rem, 1.5vw, 0.65rem); letter-spacing: 0.08em;
+    padding: 0.2rem 0.55rem; border-radius: 3px;
+    margin-right: 0.35rem; margin-bottom: 0.35rem;
     transition: background 0.2s, color 0.2s;
 }}
 .tag:hover {{ background: rgba(230,57,70,0.25); color: var(--white); }}
 
+/* ── INSIGHT BOXES ── */
 .insight-box {{
     background: var(--navy3); border: 1px solid var(--border);
-    border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 0.6rem;
+    border-radius: 6px; padding: 0.9rem 1rem; margin-bottom: 0.7rem;
     transition: border-color 0.2s;
 }}
 .insight-box:hover {{ border-color: var(--teal); }}
-.insight-title {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.3rem; }}
-.insight-text  {{ font-family: 'IBM Plex Sans', sans-serif; font-size: 0.83rem; color: var(--white); line-height: 1.5; margin: 0; }}
+.insight-title {{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.6rem, 1.5vw, 0.65rem);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--teal); margin-bottom: 0.3rem;
+}}
+.insight-text  {{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(0.78rem, 2vw, 0.83rem);
+    color: var(--white); line-height: 1.5; margin: 0;
+}}
 
+/* ── PROGRESS BARS ── */
 .prog-row {{ margin-bottom: 0.7rem; }}
-.prog-label {{ display: flex; justify-content: space-between; margin-bottom: 0.25rem; }}
-.prog-name  {{ font-family: 'IBM Plex Sans', sans-serif; font-size: 0.82rem; color: var(--white); }}
-.prog-val   {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--teal); }}
+.prog-label {{ display: flex; justify-content: space-between; margin-bottom: 0.25rem; gap: 0.5rem; }}
+.prog-name  {{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(0.74rem, 2vw, 0.82rem);
+    color: var(--white);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    flex: 1;
+}}
+.prog-val   {{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+    color: var(--teal); white-space: nowrap;
+}}
 .prog-track {{ background: var(--border); border-radius: 3px; height: 6px; overflow: hidden; }}
 .prog-fill  {{ height: 100%; border-radius: 3px; }}
 
-.dash-footer {{
-    margin-top: 4rem; padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
-    color: var(--muted); letter-spacing: 0.06em; text-align: center;
+/* ── DATA TABLE: horizontal scroll on mobile ── */
+[data-testid="stDataFrame"] {{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 6px;
+}}
+[data-testid="stDataFrame"] > div {{
+    overflow-x: auto !important;
 }}
 
-[data-testid="stSelectbox"] > div {{ background: {_sel_bg} !important; border-color: {_border} !important; color: {_sel_text} !important; }}
-.js-plotly-plot {{ background: transparent !important; }}
+/* ── SELECTBOXES ── */
+[data-testid="stSelectbox"] > div {{
+    background: {_sel_bg} !important;
+    border-color: {_border} !important;
+    color: {_sel_text} !important;
+}}
+
+/* ── FOOTER ── */
+.dash-footer {{
+    margin-top: clamp(2rem, 6vw, 4rem);
+    padding: 1.2rem 0.5rem 2rem 0.5rem;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.58rem, 1.6vw, 0.65rem);
+    color: var(--muted); letter-spacing: 0.05em;
+    text-align: center; line-height: 1.8;
+    word-break: break-word;
+}}
+
+/* ── PLOTLY ── */
+.js-plotly-plot {{ background: transparent !important; max-width: 100% !important; }}
 div[data-baseweb="popover"] {{ background-color: {_pop_bg} !important; border: 1px solid {_border} !important; }}
 div[data-baseweb="popover"] *, div[data-baseweb="menu"] * {{ color: {_sel_text} !important; }}
 div[data-baseweb="menu"] li:hover {{ background-color: {_menu_hover} !important; }}
+
+/* ── TOUCH: larger tap targets ── */
+[data-testid="stSelectbox"],
+[data-testid="stMultiSelect"] {{
+    min-height: 44px !important;
+}}
 </style>
 """, unsafe_allow_html=True)
 

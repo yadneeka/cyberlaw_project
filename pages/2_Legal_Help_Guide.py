@@ -38,10 +38,25 @@ st.markdown(f"""
     --green:  #22c55e;
 }}
 html, body, [data-testid="stAppViewContainer"] {{
-    background-color: var(--navy) !important; color: var(--white) !important;
+    background-color: var(--navy) !important;
+    color: var(--white) !important;
+    -webkit-text-size-adjust: 100%;
 }}
 [data-testid="stAppViewContainer"] > .main {{ background-color: var(--navy) !important; }}
-[data-testid="block-container"] {{ padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }}
+[data-testid="block-container"] {{
+    padding: 0 0.75rem 4rem 0.75rem !important;
+    max-width: 1400px !important;
+}}
+@media (min-width: 640px) {{
+    [data-testid="block-container"] {{
+        padding: 0 1.5rem 4rem 1.5rem !important;
+    }}
+}}
+@media (min-width: 1024px) {{
+    [data-testid="block-container"] {{
+        padding: 0 2rem 4rem 2rem !important;
+    }}
+}}
 #MainMenu, footer, header {{ visibility: hidden; }}
 [data-testid="stDecoration"] {{ display: none; }}
 
@@ -50,41 +65,54 @@ html, body, [data-testid="stAppViewContainer"] {{
 .hero-band {{
     background: {_card_bg2};
     border: 1px solid var(--border); border-left: 4px solid var(--teal);
-    padding: 2.4rem 2.2rem; margin-bottom: 2rem; border-radius: 6px;
+    padding: clamp(1.1rem, 4vw, 2.4rem) clamp(1rem, 3vw, 2.2rem);
+    margin-bottom: 1.5rem; border-radius: 6px;
     animation: fadeSlideIn 0.7s ease both; position: relative; overflow: hidden;
 }}
 .hero-band::after {{
-    content: '🛡'; position: absolute; right: 2rem; top: 50%;
-    transform: translateY(-50%); font-size: 6rem; opacity: 0.06; pointer-events: none;
+    content: '🛡'; position: absolute; right: 1.5rem; top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(2.5rem, 8vw, 6rem); opacity: 0.06; pointer-events: none;
+}}
+.hero-band h1, .hero-title {{
+    font-size: clamp(1.35rem, 4.5vw, 2rem) !important;
+    line-height: 1.25 !important;
 }}
 
 /* ── Section headers ── */
 .section-header {{
-    display: flex; align-items: baseline; gap: 1rem;
-    margin: 3rem 0 1.2rem 0; padding-bottom: 0.7rem;
+    display: flex; align-items: baseline; gap: 0.75rem;
+    margin: clamp(1.8rem, 5vw, 3rem) 0 1rem 0;
+    padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--border);
 }}
-.section-number {{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--teal); letter-spacing:0.1em; }}
-.section-title  {{ font-family:'Playfair Display',serif !important; font-size:1.4rem; font-weight:700; color:var(--white); margin:0; }}
+.section-number {{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.62rem, 1.5vw, 0.7rem); color:var(--teal); letter-spacing:0.1em; white-space:nowrap; }}
+.section-title  {{ font-family:'Playfair Display',serif !important; font-size:clamp(1.05rem, 3vw, 1.4rem) !important; font-weight:700; color:var(--white); margin:0; }}
 
-/* ── Law table ── */
-.law-table {{ width:100%; border-collapse:collapse; margin-top:0.5rem; }}
+/* ── Law table: scroll container for mobile ── */
+.law-table-scroll {{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 6px;
+    max-width: 100%;
+}}
+.law-table {{ width:100%; border-collapse:collapse; margin-top:0.5rem; min-width: 580px; }}
 .law-table th {{
     background:var(--navy3); color:var(--teal);
-    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em;
-    text-transform:uppercase; padding:0.7rem 0.9rem; border-bottom:2px solid var(--teal);
-    text-align:left;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.6rem, 1.4vw, 0.68rem); letter-spacing:0.08em;
+    text-transform:uppercase; padding:0.65rem 0.8rem; border-bottom:2px solid var(--teal);
+    text-align:left; white-space:nowrap;
 }}
 .law-table td {{
-    padding:0.75rem 0.9rem; border-bottom:1px solid var(--border);
-    font-family:'IBM Plex Sans',sans-serif; font-size:0.83rem;
-    color:var(--white); vertical-align:top; line-height:1.55;
+    padding:0.7rem 0.8rem; border-bottom:1px solid var(--border);
+    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.78rem, 2vw, 0.83rem);
+    color:var(--white); vertical-align:top; line-height:1.5;
 }}
 .law-table tr:hover td {{ background:rgba(45,212,191,0.04); }}
 .law-table tr:nth-child(even) td {{ background:rgba(26,37,64,0.5); }}
 .law-table tr:nth-child(even):hover td {{ background:rgba(45,212,191,0.06); }}
 .section-code {{
-    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.72rem, 2vw, 0.78rem);
     color:var(--amber); font-weight:600; white-space:nowrap;
 }}
 .bns-code {{ color: var(--teal); }}
@@ -97,76 +125,107 @@ html, body, [data-testid="stAppViewContainer"] {{
 .gender-tag.all {{
     background:rgba(244,162,97,0.12); border-color:rgba(244,162,97,0.35); color:var(--amber);
 }}
-.punish {{ font-size:0.78rem; color:var(--muted); }}
+.punish {{ font-size:clamp(0.72rem, 1.8vw, 0.78rem); color:var(--muted); }}
 
 /* ── Step cards ── */
 .step-card {{
     background:var(--navy3); border:1px solid var(--border);
-    border-radius:8px; padding:1.4rem 1.5rem; margin-bottom:1.1rem;
+    border-radius:8px;
+    padding:1.2rem 1.2rem 1.2rem 1.5rem;
+    margin-bottom:1rem; margin-left:0.6rem;
     position:relative; transition:border-color 0.2s, transform 0.2s;
+    overflow:hidden;
 }}
-.step-card:hover {{ border-color:var(--teal); transform:translateX(4px); }}
+.step-card:hover {{ border-color:var(--teal); transform:translateX(3px); }}
 .step-num {{
-    position:absolute; top:1.2rem; left:-1rem;
-    width:2rem; height:2rem; border-radius:50%;
+    position:absolute; top:1.1rem; left:-0.85rem;
+    width:1.8rem; height:1.8rem; border-radius:50%;
     background:var(--teal); color:var(--navy);
-    font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:0.85rem;
+    font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:0.8rem;
     display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
 }}
 .step-title {{
-    font-family:'IBM Plex Mono',monospace; font-size:0.7rem;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.63rem, 1.5vw, 0.7rem);
     text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:0.4rem;
 }}
 .step-body {{
-    font-family:'IBM Plex Sans',sans-serif; font-size:0.85rem;
+    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.8rem, 2vw, 0.85rem);
     color:var(--white); line-height:1.65; margin:0;
 }}
 .step-body a {{ color:var(--teal); text-decoration:none; }}
 .step-body a:hover {{ text-decoration:underline; }}
 .step-tip {{
-    margin-top:0.6rem; padding:0.5rem 0.8rem;
+    margin-top:0.6rem; padding:0.5rem 0.75rem;
     background:rgba(45,212,191,0.07); border-left:3px solid var(--teal);
     border-radius:0 4px 4px 0;
-    font-family:'IBM Plex Sans',sans-serif; font-size:0.78rem; color:var(--muted);
+    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.73rem, 1.8vw, 0.78rem); color:var(--muted);
+    word-break:break-word;
 }}
 
 /* ── Help cards ── */
 .help-card {{
     background:var(--navy3); border:1px solid var(--border);
     border-top:3px solid var(--teal); border-radius:6px;
-    padding:1.4rem 1.3rem; height:100%;
+    padding:1.2rem 1.1rem; height:auto;
     transition:transform 0.2s, box-shadow 0.2s;
+    margin-bottom:0.9rem;
 }}
-.help-card:hover {{ transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.2); }}
+.help-card:hover {{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.2); }}
 .help-card.amber {{ border-top-color:var(--amber); }}
 .help-card.red   {{ border-top-color:var(--red); }}
-.help-org  {{ font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }}
-.help-focus{{ font-family:'IBM Plex Mono',monospace; font-size:0.63rem; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.7rem; }}
-.help-desc {{ font-family:'IBM Plex Sans',sans-serif; font-size:0.82rem; color:var(--muted); line-height:1.55; margin-bottom:0.9rem; }}
-.help-contact {{ font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--white); }}
+.help-org  {{ font-family:'Playfair Display',serif; font-size:clamp(0.9rem, 2.5vw, 1rem); font-weight:700; color:var(--white); margin-bottom:0.3rem; }}
+.help-focus{{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.58rem, 1.4vw, 0.63rem); color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.6rem; }}
+.help-desc {{ font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.78rem, 2vw, 0.82rem); color:var(--muted); line-height:1.55; margin-bottom:0.8rem; }}
+.help-contact {{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.74rem, 1.8vw, 0.8rem); color:var(--white); word-break:break-word; }}
 .help-contact a {{ color:var(--teal); text-decoration:none; }}
 .hotline {{
     display:inline-block; background:rgba(230,57,70,0.15);
     border:1px solid rgba(230,57,70,0.4); color:var(--red);
-    font-family:'IBM Plex Mono',monospace; font-size:0.95rem; font-weight:700;
-    padding:0.3rem 0.8rem; border-radius:4px; margin-top:0.4rem;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.85rem, 2.5vw, 0.95rem); font-weight:700;
+    padding:0.3rem 0.75rem; border-radius:4px; margin-top:0.4rem;
     letter-spacing:0.05em;
+}}
+
+/* ── Emergency hotline boxes: flex-wrap for mobile ── */
+.hotline-row {{
+    display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;
+}}
+.hotline-box {{
+    flex:1 1 130px; min-width:120px;
+    border-radius:6px; padding:0.85rem 1rem; text-align:center;
 }}
 
 /* ── Callout ── */
 .callout {{
     background:rgba(230,57,70,0.08); border-left:4px solid var(--red);
-    padding:1rem 1.2rem; border-radius:0 6px 6px 0; margin:0.8rem 0;
+    padding:0.9rem 1rem; border-radius:0 6px 6px 0; margin:0.8rem 0;
 }}
 .callout.teal  {{ background:rgba(45,212,191,0.07);  border-left-color:var(--teal); }}
 .callout.amber {{ background:rgba(244,162,97,0.07);  border-left-color:var(--amber); }}
 .callout.green {{ background:rgba(34,197,94,0.07);   border-left-color:var(--green); }}
-.callout p {{ margin:0; font-size:0.87rem; color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; }}
+.callout p {{ margin:0; font-size:clamp(0.8rem, 2.2vw, 0.87rem); color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; word-break:break-word; }}
 
+/* ── Footer ── */
 .dash-footer {{
-    margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--border);
-    font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
-    color:var(--muted); letter-spacing:0.06em; text-align:center;
+    margin-top: clamp(2rem, 6vw, 4rem);
+    padding: 1.2rem 0.5rem 2rem 0.5rem;
+    border-top:1px solid var(--border);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:clamp(0.58rem, 1.6vw, 0.65rem);
+    color:var(--muted); letter-spacing:0.05em;
+    text-align:center; line-height:1.8;
+    word-break:break-word;
+}}
+
+/* ── Selectbox / text input touch targets ── */
+[data-testid="stSelectbox"],
+[data-testid="stTextInput"] {{
+    min-height: 44px !important;
+}}
+[data-testid="stDataFrame"] {{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
 }}
 </style>
 """, unsafe_allow_html=True)
