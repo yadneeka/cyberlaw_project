@@ -6,7 +6,6 @@ def top_nav(active_page="dashboard"):
     APP_NAME = "CyberLytics"
     TAGLINE = "Turning cyberlaw data into actionable insights"
 
-    # ── DESIGN TOKENS ─────────────────────────
     bg = "#0b1220"
     glass = "rgba(15, 23, 42, 0.85)"
     text = "#e6edf7"
@@ -17,15 +16,13 @@ def top_nav(active_page="dashboard"):
     st.markdown(f"""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-
     html, body {{
         background: {bg};
         color: {text};
         font-family: 'Inter', sans-serif;
     }}
 
-    /* ── NAVBAR ── */
+    /* NAVBAR */
     .nav {{
         position: sticky;
         top: 10px;
@@ -41,13 +38,7 @@ def top_nav(active_page="dashboard"):
         border-radius: 14px;
     }}
 
-    /* ── BRAND ── */
-    .nav-brand {{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }}
-
+    /* BRAND */
     .nav-brand-name {{
         font-size: 18px;
         font-weight: 600;
@@ -58,15 +49,15 @@ def top_nav(active_page="dashboard"):
         color: {muted};
     }}
 
-    /* ── BUTTONS ── */
+    /* BUTTONS */
     div.stButton > button {{
         background: transparent !important;
         border: none !important;
         color: {muted} !important;
         font-size: 14px !important;
-        padding: 8px 14px !important;
+        padding: 6px 10px !important;
         border-radius: 8px !important;
-        width: 100%;
+        white-space: nowrap;
     }}
 
     div.stButton > button:hover {{
@@ -76,11 +67,11 @@ def top_nav(active_page="dashboard"):
 
     .nav-active div.stButton > button {{
         color: {text} !important;
-        background: rgba(12, 196, 221, 0.12) !important;
-        border: 1px solid rgba(12, 196, 221, 0.25) !important;
+        background: rgba(12,196,221,0.12) !important;
+        border: 1px solid rgba(12,196,221,0.25) !important;
     }}
 
-    /* ── SLIDER ── */
+    /* SLIDER */
     .slider {{
         height:2px;
         width:50%;
@@ -88,29 +79,24 @@ def top_nav(active_page="dashboard"):
         transition: margin-left 0.35s ease;
     }}
 
-    /* ── MOBILE FIX ── */
+    /* 🔥 MOBILE FIX (HORIZONTAL, NOT STACKED) */
     @media (max-width: 768px) {{
 
-        /* Stack layout */
         .nav {{
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 10px;
+            padding: 8px 10px;
         }}
 
-        /* Hide tagline */
         .nav-brand-tag {{
             display: none;
         }}
 
-        /* Full width nav buttons */
-        .stButton {{
-            width: 100% !important;
+        .nav-brand-name {{
+            font-size: 16px;
         }}
 
-        .stButton > button {{
-            text-align: left !important;
-            width: 100% !important;
+        div.stButton > button {{
+            font-size: 13px !important;
+            padding: 5px 8px !important;
         }}
 
     }}
@@ -118,14 +104,13 @@ def top_nav(active_page="dashboard"):
     </style>
     """, unsafe_allow_html=True)
 
-    # ── NAVBAR ─────────────────────────
-
     left_col, right_col = st.columns([5, 3])
 
+    # BRAND
     with left_col:
         st.markdown(f"""
-        <div class="nav-brand">
-            <svg width="36" height="36" viewBox="0 0 24 24">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg width="30" height="30" viewBox="0 0 24 24">
                 <path d="M4 12L12 4L20 12L12 20Z" stroke="{text}" stroke-width="1.6" fill="none"/>
                 <circle cx="12" cy="12" r="2.2" fill="{text}"/>
             </svg>
@@ -136,6 +121,7 @@ def top_nav(active_page="dashboard"):
         </div>
         """, unsafe_allow_html=True)
 
+    # NAV BUTTONS
     with right_col:
         c1, c2 = st.columns(2)
 
