@@ -58,7 +58,7 @@ button[data-testid="baseButton-primary"] {{
         background: transparent !important;
         border: none !important;
         color: {muted} !important;
-         font-size: 88px !important;   /* increase */
+         font-size: 28px !important;   /* increase */
         font-weight: 500;
          padding: 10px 18px;     
         border-radius: 8px;
@@ -106,7 +106,7 @@ button[data-testid="baseButton-primary"] {{
             """, unsafe_allow_html=True)
 
         with l2:
-            st.markdown(f"<div style='font-size:30px;font-weight:600'>{APP_NAME}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size:25px;font-weight:600'>{APP_NAME}</div>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size:20px;color:{muted}'>{TAGLINE}</div>", unsafe_allow_html=True)
 
     # ── CENTER NAV ───────────────────────────
