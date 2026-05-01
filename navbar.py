@@ -28,106 +28,115 @@ def top_nav(active_page="dashboard"):
         padding-right: 20px;
     }}
 
-    /* ── Sidebar off ── */
+    /* Hide default UI */
     [data-testid="stSidebar"],
     [data-testid="collapsedControl"] {{ display: none !important; }}
     #MainMenu, footer, header {{ visibility: hidden; }}
     [data-testid="stDecoration"] {{ display: none; }}
 
-    /* ── Nav wrapper ── */
+    /* Wrapper */
     .nav-wrapper {{
         display: flex;
         justify-content: center;
-        margin-bottom: 32px;
+        width: 100%;
     }}
 
-   
-    /* ===== NAVBAR BOX ===== */
+    /* ===== MAIN NAVBAR BOX ===== */
     .nav-card {{
         width: 100%;
         max-width: 1400px;
 
-         height: 35px; 
-
-        margin-bottom: 35px;
-        margin-top: 5px;
+        margin-bottom: 20px;
 
         background: rgba(15, 23, 42, 0.95);
 
-        border: 1px solid rgba(255,255,255,0.35);
-        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 10px;
 
         box-shadow:
-            0 0 0 1px rgba(255,255,255,0.08),
+            0 0 0 1px rgba(255,255,255,0.05),
             0 12px 30px rgba(0,0,0,0.6);
 
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        padding: 14px 20px;
     }}
 
-    /* ===== SECOND BOX (NEW) ===== */
+    /* ===== SECOND BOX (FIXED) ===== */
     .sub-card {{
         width: 100%;
-        max-width: 1100px;
+        max-width: 1400px;
 
-        height: 35px;  /* adjust if needed */
+        height: 40px;
 
-        margin-bottom: 5px;
-        margin-top: -80px;
+        margin-top: -10px;
+        margin-bottom: 30px;
+
         background: rgba(15, 23, 42, 0.95);
 
-        border: 1px solid rgba(255,255,255,0.35);
-        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.20);
+        border-radius: 10px;
 
         box-shadow:
-            0 0 0 1px rgba(255,255,255,0.08),
-            0 10px 25px rgba(0,0,0,0.5);
+            0 0 0 1px rgba(255,255,255,0.05),
+            0 8px 20px rgba(0,0,0,0.4);
+
+        backdrop-filter: blur(6px);
     }}
 
-    /* ── Brand ── */
+    /* Brand */
     .brand {{
         display: flex;
         align-items: center;
-        gap: 12px;
-        flex-shrink: 0;
-    }}
-    .brand-logo {{
-        width: 64px; height: 64px;
-        background: linear-gradient(135deg,#0cc4dd22,#0cc4dd44);
-        border: 1px solid rgba(12,196,221,0.35);
-        border-radius: 8px;
-        display: flex; align-items: center; justify-content: center;
-    }}
-    .brand-name {{
-        font-size: 30px; font-weight: 700;
-        letter-spacing: -0.3px; color: {text};
-        white-space: nowrap;
-    }}
-    .brand-name span {{ color: {accent}; }}
-    .brand-tag {{
-        font-size: 18px; color: {muted};
-        white-space: nowrap;
+        gap: 14px;
     }}
 
-    /* ── Nav buttons (Streamlit override) ── */
+    .brand-logo {{
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        background: linear-gradient(135deg,#0cc4dd22,#0cc4dd44);
+        border: 1px solid rgba(12,196,221,0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }}
+
+    .brand-name {{
+        font-size: 24px;
+        font-weight: 700;
+        color: {text};
+    }}
+
+    .brand-name span {{
+        color: {accent};
+    }}
+
+    .brand-tag {{
+        font-size: 13px;
+        color: {muted};
+    }}
+
+    /* Buttons */
     button[kind="secondary"] {{
-        font-family: 'Inter', sans-serif !important;
-        font-size: 50px !important;
+        font-size: 16px !important;
         font-weight: 500 !important;
-        padding: 7px 14px !important;
+        padding: 8px 14px !important;
         border-radius: 8px !important;
         background: transparent !important;
         color: {muted} !important;
         border: 1px solid transparent !important;
         transition: all 0.2s ease !important;
-        white-space: nowrap !important;
     }}
+
     button[kind="secondary"]:hover {{
         color: {text} !important;
         background: rgba(255,255,255,0.07) !important;
         border-color: rgba(255,255,255,0.12) !important;
     }}
+
     .nav-active button[kind="secondary"] {{
         color: {text} !important;
         background: rgba(12,196,221,0.10) !important;
@@ -135,18 +144,24 @@ def top_nav(active_page="dashboard"):
         font-weight: 600 !important;
     }}
 
-    /* ── Mobile: keep row layout ── */
+    /* Mobile fix */
     @media (max-width: 640px) {{
         .brand-tag {{ display: none; }}
-        .nav-card  {{ padding: 0 12px; min-height: 54px; }}
+
+        .nav-card {{
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px;
+        }}
+
         button[kind="secondary"] {{
-            font-size: 12px !important;
-            padding: 6px 10px !important;
+            width: 100% !important;
         }}
     }}
     </style>
     """, unsafe_allow_html=True)
 
+    # ===== NAVBAR =====
     st.markdown('<div class="nav-wrapper"><div class="nav-card">', unsafe_allow_html=True)
 
     left, right = st.columns([5, 5])
@@ -160,10 +175,6 @@ def top_nav(active_page="dashboard"):
               <rect x="9"  y="12" width="5" height="18" rx="1.5" fill="#f4a261"/>
               <rect x="16" y="7"  width="5" height="23" rx="1.5" fill="{accent}"/>
               <rect x="23" y="3"  width="5" height="27" rx="1.5" fill="{accent}" opacity="0.4"/>
-              <polyline points="4.5,24 11.5,18 18.5,11 25.5,6"
-                stroke="white" stroke-width="1.5" fill="none"
-                stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-              <circle cx="25.5" cy="6" r="2.2" fill="white" opacity="0.85"/>
             </svg>
           </div>
           <div>
@@ -178,22 +189,29 @@ def top_nav(active_page="dashboard"):
 
         with c1:
             st.markdown(f'<div class="{"nav-active" if active_page=="dashboard" else ""}">', unsafe_allow_html=True)
-            if st.button("▦  Dashboard", key="nav_dash"):
+            if st.button("▦ Dashboard", key="nav_dash"):
                 st.switch_page("app.py")
             st.markdown("</div>", unsafe_allow_html=True)
 
         with c2:
             st.markdown(f'<div class="{"nav-active" if active_page=="legal" else ""}">', unsafe_allow_html=True)
-            if st.button("🛡  Legal Help", key="nav_legal"):
+            if st.button("🛡 Legal Help", key="nav_legal"):
                 st.switch_page("pages/2_Legal_Help_Guide.py")
             st.markdown("</div>", unsafe_allow_html=True)
 
         with c3:
             st.markdown(f'<div class="{"nav-active" if active_page=="pipeline" else ""}">', unsafe_allow_html=True)
-            if st.button("⚙  Pipeline", key="nav_pipeline"):
+            if st.button("⚙ Pipeline", key="nav_pipeline"):
                 st.switch_page("pages/3_Data_Pipeline.py")
             st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown('</div></div>', unsafe_allow_html=True)
+
+    # ===== SECOND BOX (NOW WORKING) =====
+    st.markdown('''
+    <div class="nav-wrapper">
+        <div class="sub-card"></div>
+    </div>
+    ''', unsafe_allow_html=True)
 
     return "dark"
