@@ -38,25 +38,10 @@ st.markdown(f"""
     --green:  #22c55e;
 }}
 html, body, [data-testid="stAppViewContainer"] {{
-    background-color: var(--navy) !important;
-    color: var(--white) !important;
-    -webkit-text-size-adjust: 100%;
+    background-color: var(--navy) !important; color: var(--white) !important;
 }}
 [data-testid="stAppViewContainer"] > .main {{ background-color: var(--navy) !important; }}
-[data-testid="block-container"] {{
-    padding: 0 0.75rem 4rem 0.75rem !important;
-    max-width: 1400px !important;
-}}
-@media (min-width: 640px) {{
-    [data-testid="block-container"] {{
-        padding: 0 1.5rem 4rem 1.5rem !important;
-    }}
-}}
-@media (min-width: 1024px) {{
-    [data-testid="block-container"] {{
-        padding: 0 2rem 4rem 2rem !important;
-    }}
-}}
+[data-testid="block-container"] {{ padding: 0 2rem 4rem 2rem !important; max-width: 1400px !important; }}
 #MainMenu, footer, header {{ visibility: hidden; }}
 [data-testid="stDecoration"] {{ display: none; }}
 
@@ -65,54 +50,41 @@ html, body, [data-testid="stAppViewContainer"] {{
 .hero-band {{
     background: {_card_bg2};
     border: 1px solid var(--border); border-left: 4px solid var(--teal);
-    padding: clamp(1.1rem, 4vw, 2.4rem) clamp(1rem, 3vw, 2.2rem);
-    margin-bottom: 1.5rem; border-radius: 6px;
+    padding: 2.4rem 2.2rem; margin-bottom: 2rem; border-radius: 6px;
     animation: fadeSlideIn 0.7s ease both; position: relative; overflow: hidden;
 }}
 .hero-band::after {{
-    content: '🛡'; position: absolute; right: 1.5rem; top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(2.5rem, 8vw, 6rem); opacity: 0.06; pointer-events: none;
-}}
-.hero-band h1, .hero-title {{
-    font-size: clamp(1.35rem, 4.5vw, 2rem) !important;
-    line-height: 1.25 !important;
+    content: '🛡'; position: absolute; right: 2rem; top: 50%;
+    transform: translateY(-50%); font-size: 6rem; opacity: 0.06; pointer-events: none;
 }}
 
 /* ── Section headers ── */
 .section-header {{
-    display: flex; align-items: baseline; gap: 0.75rem;
-    margin: clamp(1.8rem, 5vw, 3rem) 0 1rem 0;
-    padding-bottom: 0.6rem;
+    display: flex; align-items: baseline; gap: 1rem;
+    margin: 3rem 0 1.2rem 0; padding-bottom: 0.7rem;
     border-bottom: 1px solid var(--border);
 }}
-.section-number {{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.62rem, 1.5vw, 0.7rem); color:var(--teal); letter-spacing:0.1em; white-space:nowrap; }}
-.section-title  {{ font-family:'Playfair Display',serif !important; font-size:clamp(1.05rem, 3vw, 1.4rem) !important; font-weight:700; color:var(--white); margin:0; }}
+.section-number {{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--teal); letter-spacing:0.1em; }}
+.section-title  {{ font-family:'Playfair Display',serif !important; font-size:1.4rem; font-weight:700; color:var(--white); margin:0; }}
 
-/* ── Law table: scroll container for mobile ── */
-.law-table-scroll {{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 6px;
-    max-width: 100%;
-}}
-.law-table {{ width:100%; border-collapse:collapse; margin-top:0.5rem; min-width: 580px; }}
+/* ── Law table ── */
+.law-table {{ width:100%; border-collapse:collapse; margin-top:0.5rem; }}
 .law-table th {{
     background:var(--navy3); color:var(--teal);
-    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.6rem, 1.4vw, 0.68rem); letter-spacing:0.08em;
-    text-transform:uppercase; padding:0.65rem 0.8rem; border-bottom:2px solid var(--teal);
-    text-align:left; white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em;
+    text-transform:uppercase; padding:0.7rem 0.9rem; border-bottom:2px solid var(--teal);
+    text-align:left;
 }}
 .law-table td {{
-    padding:0.7rem 0.8rem; border-bottom:1px solid var(--border);
-    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.78rem, 2vw, 0.83rem);
-    color:var(--white); vertical-align:top; line-height:1.5;
+    padding:0.75rem 0.9rem; border-bottom:1px solid var(--border);
+    font-family:'IBM Plex Sans',sans-serif; font-size:0.83rem;
+    color:var(--white); vertical-align:top; line-height:1.55;
 }}
 .law-table tr:hover td {{ background:rgba(45,212,191,0.04); }}
 .law-table tr:nth-child(even) td {{ background:rgba(26,37,64,0.5); }}
 .law-table tr:nth-child(even):hover td {{ background:rgba(45,212,191,0.06); }}
 .section-code {{
-    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.72rem, 2vw, 0.78rem);
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
     color:var(--amber); font-weight:600; white-space:nowrap;
 }}
 .bns-code {{ color: var(--teal); }}
@@ -125,107 +97,76 @@ html, body, [data-testid="stAppViewContainer"] {{
 .gender-tag.all {{
     background:rgba(244,162,97,0.12); border-color:rgba(244,162,97,0.35); color:var(--amber);
 }}
-.punish {{ font-size:clamp(0.72rem, 1.8vw, 0.78rem); color:var(--muted); }}
+.punish {{ font-size:0.78rem; color:var(--muted); }}
 
 /* ── Step cards ── */
 .step-card {{
     background:var(--navy3); border:1px solid var(--border);
-    border-radius:8px;
-    padding:1.2rem 1.2rem 1.2rem 1.5rem;
-    margin-bottom:1rem; margin-left:0.6rem;
+    border-radius:8px; padding:1.4rem 1.5rem; margin-bottom:1.1rem;
     position:relative; transition:border-color 0.2s, transform 0.2s;
-    overflow:hidden;
 }}
-.step-card:hover {{ border-color:var(--teal); transform:translateX(3px); }}
+.step-card:hover {{ border-color:var(--teal); transform:translateX(4px); }}
 .step-num {{
-    position:absolute; top:1.1rem; left:-0.85rem;
-    width:1.8rem; height:1.8rem; border-radius:50%;
+    position:absolute; top:1.2rem; left:-1rem;
+    width:2rem; height:2rem; border-radius:50%;
     background:var(--teal); color:var(--navy);
-    font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:0.8rem;
+    font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:0.85rem;
     display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
 }}
 .step-title {{
-    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.63rem, 1.5vw, 0.7rem);
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem;
     text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:0.4rem;
 }}
 .step-body {{
-    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.8rem, 2vw, 0.85rem);
+    font-family:'IBM Plex Sans',sans-serif; font-size:0.85rem;
     color:var(--white); line-height:1.65; margin:0;
 }}
 .step-body a {{ color:var(--teal); text-decoration:none; }}
 .step-body a:hover {{ text-decoration:underline; }}
 .step-tip {{
-    margin-top:0.6rem; padding:0.5rem 0.75rem;
+    margin-top:0.6rem; padding:0.5rem 0.8rem;
     background:rgba(45,212,191,0.07); border-left:3px solid var(--teal);
     border-radius:0 4px 4px 0;
-    font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.73rem, 1.8vw, 0.78rem); color:var(--muted);
-    word-break:break-word;
+    font-family:'IBM Plex Sans',sans-serif; font-size:0.78rem; color:var(--muted);
 }}
 
 /* ── Help cards ── */
 .help-card {{
     background:var(--navy3); border:1px solid var(--border);
     border-top:3px solid var(--teal); border-radius:6px;
-    padding:1.2rem 1.1rem; height:auto;
+    padding:1.4rem 1.3rem; height:100%;
     transition:transform 0.2s, box-shadow 0.2s;
-    margin-bottom:0.9rem;
 }}
-.help-card:hover {{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.2); }}
+.help-card:hover {{ transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.2); }}
 .help-card.amber {{ border-top-color:var(--amber); }}
 .help-card.red   {{ border-top-color:var(--red); }}
-.help-org  {{ font-family:'Playfair Display',serif; font-size:clamp(0.9rem, 2.5vw, 1rem); font-weight:700; color:var(--white); margin-bottom:0.3rem; }}
-.help-focus{{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.58rem, 1.4vw, 0.63rem); color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.6rem; }}
-.help-desc {{ font-family:'IBM Plex Sans',sans-serif; font-size:clamp(0.78rem, 2vw, 0.82rem); color:var(--muted); line-height:1.55; margin-bottom:0.8rem; }}
-.help-contact {{ font-family:'IBM Plex Mono',monospace; font-size:clamp(0.74rem, 1.8vw, 0.8rem); color:var(--white); word-break:break-word; }}
+.help-org  {{ font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }}
+.help-focus{{ font-family:'IBM Plex Mono',monospace; font-size:0.63rem; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.7rem; }}
+.help-desc {{ font-family:'IBM Plex Sans',sans-serif; font-size:0.82rem; color:var(--muted); line-height:1.55; margin-bottom:0.9rem; }}
+.help-contact {{ font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--white); }}
 .help-contact a {{ color:var(--teal); text-decoration:none; }}
 .hotline {{
     display:inline-block; background:rgba(230,57,70,0.15);
     border:1px solid rgba(230,57,70,0.4); color:var(--red);
-    font-family:'IBM Plex Mono',monospace; font-size:clamp(0.85rem, 2.5vw, 0.95rem); font-weight:700;
-    padding:0.3rem 0.75rem; border-radius:4px; margin-top:0.4rem;
+    font-family:'IBM Plex Mono',monospace; font-size:0.95rem; font-weight:700;
+    padding:0.3rem 0.8rem; border-radius:4px; margin-top:0.4rem;
     letter-spacing:0.05em;
-}}
-
-/* ── Emergency hotline boxes: flex-wrap for mobile ── */
-.hotline-row {{
-    display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;
-}}
-.hotline-box {{
-    flex:1 1 130px; min-width:120px;
-    border-radius:6px; padding:0.85rem 1rem; text-align:center;
 }}
 
 /* ── Callout ── */
 .callout {{
     background:rgba(230,57,70,0.08); border-left:4px solid var(--red);
-    padding:0.9rem 1rem; border-radius:0 6px 6px 0; margin:0.8rem 0;
+    padding:1rem 1.2rem; border-radius:0 6px 6px 0; margin:0.8rem 0;
 }}
 .callout.teal  {{ background:rgba(45,212,191,0.07);  border-left-color:var(--teal); }}
 .callout.amber {{ background:rgba(244,162,97,0.07);  border-left-color:var(--amber); }}
 .callout.green {{ background:rgba(34,197,94,0.07);   border-left-color:var(--green); }}
-.callout p {{ margin:0; font-size:clamp(0.8rem, 2.2vw, 0.87rem); color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; word-break:break-word; }}
+.callout p {{ margin:0; font-size:0.87rem; color:var(--white); line-height:1.6; font-family:'IBM Plex Sans',sans-serif; }}
 
-/* ── Footer ── */
 .dash-footer {{
-    margin-top: clamp(2rem, 6vw, 4rem);
-    padding: 1.2rem 0.5rem 2rem 0.5rem;
-    border-top:1px solid var(--border);
-    font-family:'IBM Plex Mono',monospace;
-    font-size:clamp(0.58rem, 1.6vw, 0.65rem);
-    color:var(--muted); letter-spacing:0.05em;
-    text-align:center; line-height:1.8;
-    word-break:break-word;
-}}
-
-/* ── Selectbox / text input touch targets ── */
-[data-testid="stSelectbox"],
-[data-testid="stTextInput"] {{
-    min-height: 44px !important;
-}}
-[data-testid="stDataFrame"] {{
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
+    margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
+    color:var(--muted); letter-spacing:0.06em; text-align:center;
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -262,6 +203,7 @@ st.markdown("""
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 08 — KNOW YOUR RIGHTS (LEGAL REFERENCE TABLE)
 # ══════════════════════════════════════════════════════════════════════════════
+
 st.markdown("""
 <div class="section-header">
   <span class="section-number">08 —</span>
@@ -294,8 +236,8 @@ LAWS = [
         "section": "Section 66C",
         "bns_equiv": "—",
         "crime": "Identity Theft",
-        "plain_english": "Someone is pretending to be you online — using your name, photo, or personal details without permission.",
-        "examples": "Fake Instagram/WhatsApp account in your name; using your Aadhaar or PAN details.",
+        "plain_english": "Someone impersonates you online using your identity.",
+        "examples": "Fake Instagram/WhatsApp account; misuse of Aadhaar/PAN.",
         "punishment": "Up to 3 years imprisonment + ₹1 lakh fine",
         "gender_specific": "All",
     },
@@ -303,9 +245,9 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 66D",
         "bns_equiv": "BNS §319",
-        "crime": "Cheating by Impersonation (Online)",
-        "plain_english": "Someone is pretending to be you or another person online to cheat or defraud you.",
-        "examples": "Fake matrimonial profiles; impersonating a bank officer to extract OTPs.",
+        "crime": "Online Impersonation Fraud",
+        "plain_english": "Someone pretends to be another person to cheat you online.",
+        "examples": "Fake profiles; impersonating bank officials for OTP scams.",
         "punishment": "Up to 3 years imprisonment + ₹1 lakh fine",
         "gender_specific": "All",
     },
@@ -313,9 +255,9 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 66E",
         "bns_equiv": "BNS §77",
-        "crime": "Violation of Privacy (Intimate Images)",
-        "plain_english": "Someone has captured, published, or shared private/intimate images of you without your consent.",
-        "examples": "Hidden camera footage; sharing bathroom/changing-room photos; sharing images sent privately.",
+        "crime": "Privacy Violation",
+        "plain_english": "Sharing or capturing private images without consent.",
+        "examples": "Hidden camera footage; leaked private photos.",
         "punishment": "Up to 3 years imprisonment + ₹2 lakh fine",
         "gender_specific": "Women",
     },
@@ -323,9 +265,9 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 67",
         "bns_equiv": "BNS §294",
-        "crime": "Publishing Obscene Material Online",
-        "plain_english": "Someone has posted obscene or sexually offensive content about you on the internet.",
-        "examples": "Morphed obscene photos posted on social media; obscene messages circulated in groups.",
+        "crime": "Obscene Content Online",
+        "plain_english": "Posting or sharing obscene content about someone online.",
+        "examples": "Morphed images; obscene messages in groups.",
         "punishment": "Up to 3 years + ₹5 lakh fine (first offence); up to 5 years + ₹10 lakh (repeat)",
         "gender_specific": "All",
     },
@@ -333,9 +275,9 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 67A",
         "bns_equiv": "BNS §295",
-        "crime": "Publishing Sexually Explicit Material Online",
-        "plain_english": "Someone has posted explicitly sexual content involving you without your consent.",
-        "examples": "Revenge porn; non-consensual intimate image distribution (NCII); deepfake sexual videos.",
+        "crime": "Explicit Content (Non-consensual)",
+        "plain_english": "Sharing sexual content involving someone without consent.",
+        "examples": "Revenge porn; deepfake videos.",
         "punishment": "Up to 5 years + ₹10 lakh fine (first offence); up to 7 years + ₹10 lakh (repeat)",
         "gender_specific": "Women",
     },
@@ -343,9 +285,9 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 67B",
         "bns_equiv": "BNS §296",
-        "crime": "Child Sexual Abuse Material (CSAM) Online",
-        "plain_english": "Sexual content involving anyone under 18 published or transmitted online.",
-        "examples": "Any sexual image, video, or text involving minors on any platform.",
+        "crime": "Child Sexual Content",
+        "plain_english": "Publishing or sharing sexual content involving minors.",
+        "examples": "Any sexual content involving people under 18.",
         "punishment": "Up to 5 years + ₹10 lakh fine (first offence); up to 7 years + ₹10 lakh (repeat)",
         "gender_specific": "Children",
     },
@@ -353,21 +295,22 @@ LAWS = [
         "law_type": "IT Act 2000",
         "section": "Section 43 + 66",
         "bns_equiv": "—",
-        "crime": "Unauthorised Access / Hacking",
-        "plain_english": "Someone has broken into your email, social media, or other online accounts without your permission.",
-        "examples": "Email account hacked; WhatsApp taken over; cloud storage accessed.",
+        "crime": "Hacking / Unauthorized Access",
+        "plain_english": "Accessing someone’s accounts without permission.",
+        "examples": "Email hacked; WhatsApp takeover.",
         "punishment": "Up to 3 years imprisonment + ₹5 lakh fine",
         "gender_specific": "All",
     },
+
     # IPC / BNS
     {
         "law_type": "IPC (Old Law)",
         "section": "IPC §354C",
         "bns_equiv": "BNS §77",
         "crime": "Voyeurism",
-        "plain_english": "Someone has watched, photographed, or filmed you in a private act (bathing, changing, intimate) without your knowledge.",
-        "examples": "Hidden cameras in toilets or changing rooms; drone cameras; peeping through windows.",
-        "punishment": "1–3 years imprisonment (first offence); 3–7 years (repeat offence)",
+        "plain_english": "Watching or recording someone in private without consent.",
+        "examples": "Hidden cameras; spying in private spaces.",
+        "punishment": "1–3 years (first); 3–7 years (repeat)",
         "gender_specific": "Women",
     },
     {
@@ -375,18 +318,18 @@ LAWS = [
         "section": "IPC §354D",
         "bns_equiv": "BNS §78",
         "crime": "Cyberstalking",
-        "plain_english": "Someone is repeatedly following you online, monitoring you, or contacting you against your will using the internet or electronic devices.",
-        "examples": "Repeated messages after being told to stop; tracking your location via apps; monitoring social media obsessively.",
-        "punishment": "Up to 3 years imprisonment (first offence); up to 5 years (repeat offence)",
+        "plain_english": "Repeated online harassment or tracking without consent.",
+        "examples": "Constant messages; tracking social media activity.",
+        "punishment": "Up to 3 years (first); up to 5 years (repeat)",
         "gender_specific": "Women",
     },
     {
         "law_type": "IPC (Old Law)",
         "section": "IPC §507",
         "bns_equiv": "BNS §352",
-        "crime": "Criminal Intimidation (Anonymous Threats)",
-        "plain_english": "Someone is sending you threats anonymously — threatening to harm you, your family, or your reputation.",
-        "examples": "Anonymous rape/death threats online; threatening messages from unknown numbers.",
+        "crime": "Anonymous Threats",
+        "plain_english": "Sending threats anonymously to harm or intimidate.",
+        "examples": "Death threats; anonymous abusive messages.",
         "punishment": "Up to 2 years imprisonment",
         "gender_specific": "All",
     },
@@ -394,9 +337,9 @@ LAWS = [
         "law_type": "IPC (Old Law)",
         "section": "IPC §509",
         "bns_equiv": "BNS §79",
-        "crime": "Words or Gestures Insulting a Woman's Modesty",
-        "plain_english": "Someone has used words, sounds, gestures, or objects to insult or humiliate you as a woman.",
-        "examples": "Sexually abusive comments online; obscene voice notes sent on WhatsApp; catcalling via video call.",
+        "crime": "Insulting Modesty (Women)",
+        "plain_english": "Using words or actions to insult a woman’s dignity.",
+        "examples": "Sexual comments; obscene messages.",
         "punishment": "Up to 3 years imprisonment + fine",
         "gender_specific": "Women",
     },
@@ -404,20 +347,21 @@ LAWS = [
         "law_type": "IPC (Old Law)",
         "section": "IPC §499–500",
         "bns_equiv": "BNS §356",
-        "crime": "Defamation (Online)",
-        "plain_english": "Someone has published false statements about you online that damage your reputation.",
-        "examples": "False rumours spread on social media; defamatory posts in WhatsApp groups; fake news about you.",
+        "crime": "Defamation",
+        "plain_english": "Spreading false information that harms reputation.",
+        "examples": "Fake news; defamatory posts online.",
         "punishment": "Up to 2 years imprisonment + fine",
         "gender_specific": "All",
     },
-    # BNS 2023 new provisions
+
+    # BNS 2023
     {
         "law_type": "BNS 2023 (New Law)",
         "section": "BNS §308",
         "bns_equiv": "New provision",
-        "crime": "Extortion (Online)",
-        "plain_english": "Someone is threatening to expose private information or images unless you pay money or comply with demands.",
-        "examples": "Sextortion: 'Pay me or I will send your photos to your family'; financial extortion after hacking.",
+        "crime": "Online Extortion",
+        "plain_english": "Threatening to expose data or images for money.",
+        "examples": "Sextortion; blackmail using private data.",
         "punishment": "Up to 10 years imprisonment + fine",
         "gender_specific": "All",
     },
@@ -426,111 +370,79 @@ LAWS = [
         "section": "BNS §351",
         "bns_equiv": "New provision",
         "crime": "Criminal Intimidation",
-        "plain_english": "Someone threatens to injure you, your reputation, or your property to force you to do something.",
-        "examples": "Online threats to release private content; doxxing threats; threats to inform employer.",
-        "punishment": "Up to 2 years imprisonment + fine (up to 7 years if threat is of death or grievous hurt)",
+        "plain_english": "Threatening harm to force someone to act.",
+        "examples": "Threats to leak content or harm reputation.",
+        "punishment": "Up to 2 years (up to 7 years for severe threats)",
         "gender_specific": "All",
     },
     {
         "law_type": "BNS 2023 (New Law)",
         "section": "BNS §318",
         "bns_equiv": "Replaces IPC §420",
-        "crime": "Cheating / Online Fraud",
-        "plain_english": "Someone deceived you online to take money or property from you.",
-        "examples": "Investment scams (Pig Butchering); fake job offers; romance scams; UPI fraud.",
+        "crime": "Online Fraud",
+        "plain_english": "Deceiving someone online to steal money or assets.",
+        "examples": "UPI scams; fake jobs; investment fraud.",
         "punishment": "Up to 7 years imprisonment + fine",
         "gender_specific": "All",
     },
 ]
-
 # ── Apply filters ─────────────────────────────────────────────────────────────
 filtered_laws = LAWS
+
 if law_filter != "All Laws":
     filtered_laws = [l for l in filtered_laws if l["law_type"] == law_filter]
+
 if crime_search:
     q = crime_search.lower()
     filtered_laws = [l for l in filtered_laws if
-        q in l["crime"].lower() or q in l["plain_english"].lower() or
-        q in l["examples"].lower() or q in l["section"].lower()]
+        q in l["crime"].lower() or 
+        q in l["plain_english"].lower() or
+        q in l["examples"].lower() or 
+        q in l["section"].lower()
+    ]
 
+# Count text
 st.markdown(f"""
 <p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#8892aa;margin-bottom:0.6rem;">
   Showing {len(filtered_laws)} of {len(LAWS)} legal provisions
-</p>""", unsafe_allow_html=True)
-
-# ── Render table using divs (Streamlit strips <table> tags) ───────────────────
-# Header row
-st.markdown("""
-<div style="display:grid;grid-template-columns:150px 200px 1fr 200px 110px;
-            gap:0;background:var(--navy3);border-radius:6px 6px 0 0;
-            border:1px solid var(--border);border-bottom:2px solid var(--teal);
-            padding:0.7rem 0.9rem;">
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
-              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Section</div>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
-              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Crime Type</div>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
-              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">What It Means + Examples</div>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
-              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding-right:0.5rem;">Maximum Punishment</div>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
-              letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);">Applies To</div>
-</div>
+</p>
 """, unsafe_allow_html=True)
 
-for i, law in enumerate(filtered_laws):
-    gt_class = "all" if law["gender_specific"] == "All" else ""
-    bns_text = (
-        f'<span style="font-family:\'IBM Plex Mono\',monospace;font-size:0.75rem;color:#2dd4bf;font-weight:600;">{law["bns_equiv"]}</span>'
-        if law["bns_equiv"] != "—"
-        else '<span style="color:#8892aa;font-size:0.75rem;">—</span>'
+
+# ── Dataframe table (NEW SYSTEM) ──────────────────────────────────────────────
+import pandas as pd
+
+if len(filtered_laws) > 0:
+
+    df_laws = pd.DataFrame(filtered_laws)
+
+    # Combine explanation + examples
+    df_laws["Explanation"] = df_laws["plain_english"] + " | Examples: " + df_laws["examples"]
+
+    display_df = df_laws[[
+        "section",
+        "crime",
+        "Explanation",
+        "punishment",
+        "gender_specific"
+    ]].rename(columns={
+        "section": "Section",
+        "crime": "Crime Type",
+        "punishment": "Punishment",
+        "gender_specific": "Applies To"
+    })
+
+    st.dataframe(
+        display_df,
+        use_container_width=True,
+        height=420
     )
-    row_bg = "rgba(26,37,64,0.5)" if i % 2 == 1 else "transparent"
-    gender_color = "#e63946" if law["gender_specific"] == "Women" else ("#f4a261" if law["gender_specific"] == "All" else "#2dd4bf")
-    gender_bg   = "rgba(230,57,70,0.15)" if law["gender_specific"] == "Women" else ("rgba(244,162,97,0.12)" if law["gender_specific"] == "All" else "rgba(45,212,191,0.1)")
-    gender_border= "rgba(230,57,70,0.35)" if law["gender_specific"] == "Women" else ("rgba(244,162,97,0.35)" if law["gender_specific"] == "All" else "rgba(45,212,191,0.4)")
 
-    st.markdown(f"""
-    <div style="display:grid;grid-template-columns:150px 200px 1fr 200px 110px;
-                gap:0;background:{row_bg};
-                border-left:1px solid var(--border);border-right:1px solid var(--border);
-                border-bottom:1px solid var(--border);
-                padding:0.75rem 0.9rem;
-                transition:background 0.15s;"
-         onmouseover="this.style.background='rgba(45,212,191,0.04)'"
-         onmouseout="this.style.background='{row_bg}'">
-      <div style="padding-right:0.8rem;vertical-align:top;">
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.78rem;
-                     color:#f4a261;font-weight:600;white-space:nowrap;">{law["section"]}</span><br>
-        <span style="font-size:0.68rem;color:#8892aa;font-family:'IBM Plex Mono',monospace;">BNS: </span>{bns_text}
-      </div>
-      <div style="padding-right:0.8rem;vertical-align:top;">
-        <strong style="color:#f0f4ff;font-family:'IBM Plex Sans',sans-serif;font-size:0.83rem;">{law["crime"]}</strong><br>
-        <span style="color:#8892aa;font-size:0.78rem;font-family:'IBM Plex Sans',sans-serif;">{law["law_type"]}</span>
-      </div>
-      <div style="padding-right:0.8rem;vertical-align:top;line-height:1.55;">
-        <span style="color:#f0f4ff;font-family:'IBM Plex Sans',sans-serif;font-size:0.83rem;">{law["plain_english"]}</span>
-        <br>
-        <span style="color:#8892aa;font-size:0.77rem;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">
-          Examples: {law["examples"]}
-        </span>
-      </div>
-      <div style="padding-right:0.8rem;font-size:0.78rem;color:#8892aa;
-                  font-family:'IBM Plex Sans',sans-serif;line-height:1.5;">{law["punishment"]}</div>
-      <div>
-        <span style="display:inline-block;background:{gender_bg};
-                     border:1px solid {gender_border};color:{gender_color};
-                     font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
-                     padding:0.12rem 0.45rem;border-radius:3px;white-space:nowrap;">
-          {law["gender_specific"]}
-        </span>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+else:
+    st.warning("No results found. Try a different filter or keyword.")
 
-# Closing border radius bottom
-st.markdown('<div style="height:6px;background:var(--navy3);border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;"></div>', unsafe_allow_html=True)
 
+# ── Important note (keep this) ────────────────────────────────────────────────
 st.markdown("""
 <div class="callout amber" style="margin-top:1rem;">
   <p>&#9888;&#65039; <strong>Important:</strong> Multiple laws can apply to the same incident. For example, 
@@ -539,7 +451,6 @@ st.markdown("""
   gives the strongest case.</p>
 </div>
 """, unsafe_allow_html=True)
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 09 — HOW TO FILE A COMPLAINT

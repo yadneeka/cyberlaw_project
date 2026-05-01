@@ -97,3 +97,253 @@ def top_nav(active_page="dashboard"):
             st.markdown("</div>", unsafe_allow_html=True)
 
     return "dark"
+
+
+    # ══════════════════════════════════════════════════════════════════════════════
+# SECTION 08 — KNOW YOUR RIGHTS (LEGAL REFERENCE TABLE)
+# ══════════════════════════════════════════════════════════════════════════════
+st.markdown("""
+<div class="section-header">
+  <span class="section-number">08 —</span>
+  <p class="section-title">Know Your Rights: The Laws That Protect You</p>
+</div>""", unsafe_allow_html=True)
+
+st.markdown("""
+<p style="font-family:'IBM Plex Sans',sans-serif;font-size:0.9rem;color:#8892aa;margin-bottom:1.2rem;line-height:1.6;">
+Use the table below to find which law applies to your situation. 
+<strong style="color:#f0f4ff;">IT Act</strong> sections are India's main cyber law. 
+<strong style="color:#f4a261;">IPC sections</strong> are from the older Indian Penal Code (still valid). 
+<strong style="color:#2dd4bf;">BNS sections</strong> are from the new Bharatiya Nyaya Sanhita 2023 which is replacing the IPC — 
+if your case is filed from July 2024 onwards, the BNS applies.
+</p>
+""", unsafe_allow_html=True)
+
+# ── Filter ────────────────────────────────────────────────────────────────────
+filter_col1, filter_col2 = st.columns([2, 3])
+with filter_col1:
+    law_filter = st.selectbox("Filter by Law Type",
+        ["All Laws", "IT Act 2000", "IPC (Old Law)", "BNS 2023 (New Law)"])
+with filter_col2:
+    crime_search = st.text_input("Search by crime or keyword", placeholder="e.g. stalking, deepfake, morphed image...")
+
+# ── Law data ──────────────────────────────────────────────────────────────────
+LAWS = [
+    # IT Act
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 66C",
+        "bns_equiv": "—",
+        "crime": "Identity Theft",
+        "plain_english": "Someone is pretending to be you online — using your name, photo, or personal details without permission.",
+        "examples": "Fake Instagram/WhatsApp account in your name; using your Aadhaar or PAN details.",
+        "punishment": "Up to 3 years imprisonment + ₹1 lakh fine",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 66D",
+        "bns_equiv": "BNS §319",
+        "crime": "Cheating by Impersonation (Online)",
+        "plain_english": "Someone is pretending to be you or another person online to cheat or defraud you.",
+        "examples": "Fake matrimonial profiles; impersonating a bank officer to extract OTPs.",
+        "punishment": "Up to 3 years imprisonment + ₹1 lakh fine",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 66E",
+        "bns_equiv": "BNS §77",
+        "crime": "Violation of Privacy (Intimate Images)",
+        "plain_english": "Someone has captured, published, or shared private/intimate images of you without your consent.",
+        "examples": "Hidden camera footage; sharing bathroom/changing-room photos; sharing images sent privately.",
+        "punishment": "Up to 3 years imprisonment + ₹2 lakh fine",
+        "gender_specific": "Women",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 67",
+        "bns_equiv": "BNS §294",
+        "crime": "Publishing Obscene Material Online",
+        "plain_english": "Someone has posted obscene or sexually offensive content about you on the internet.",
+        "examples": "Morphed obscene photos posted on social media; obscene messages circulated in groups.",
+        "punishment": "Up to 3 years + ₹5 lakh fine (first offence); up to 5 years + ₹10 lakh (repeat)",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 67A",
+        "bns_equiv": "BNS §295",
+        "crime": "Publishing Sexually Explicit Material Online",
+        "plain_english": "Someone has posted explicitly sexual content involving you without your consent.",
+        "examples": "Revenge porn; non-consensual intimate image distribution (NCII); deepfake sexual videos.",
+        "punishment": "Up to 5 years + ₹10 lakh fine (first offence); up to 7 years + ₹10 lakh (repeat)",
+        "gender_specific": "Women",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 67B",
+        "bns_equiv": "BNS §296",
+        "crime": "Child Sexual Abuse Material (CSAM) Online",
+        "plain_english": "Sexual content involving anyone under 18 published or transmitted online.",
+        "examples": "Any sexual image, video, or text involving minors on any platform.",
+        "punishment": "Up to 5 years + ₹10 lakh fine (first offence); up to 7 years + ₹10 lakh (repeat)",
+        "gender_specific": "Children",
+    },
+    {
+        "law_type": "IT Act 2000",
+        "section": "Section 43 + 66",
+        "bns_equiv": "—",
+        "crime": "Unauthorised Access / Hacking",
+        "plain_english": "Someone has broken into your email, social media, or other online accounts without your permission.",
+        "examples": "Email account hacked; WhatsApp taken over; cloud storage accessed.",
+        "punishment": "Up to 3 years imprisonment + ₹5 lakh fine",
+        "gender_specific": "All",
+    },
+    # IPC / BNS
+    {
+        "law_type": "IPC (Old Law)",
+        "section": "IPC §354C",
+        "bns_equiv": "BNS §77",
+        "crime": "Voyeurism",
+        "plain_english": "Someone has watched, photographed, or filmed you in a private act (bathing, changing, intimate) without your knowledge.",
+        "examples": "Hidden cameras in toilets or changing rooms; drone cameras; peeping through windows.",
+        "punishment": "1–3 years imprisonment (first offence); 3–7 years (repeat offence)",
+        "gender_specific": "Women",
+    },
+    {
+        "law_type": "IPC (Old Law)",
+        "section": "IPC §354D",
+        "bns_equiv": "BNS §78",
+        "crime": "Cyberstalking",
+        "plain_english": "Someone is repeatedly following you online, monitoring you, or contacting you against your will using the internet or electronic devices.",
+        "examples": "Repeated messages after being told to stop; tracking your location via apps; monitoring social media obsessively.",
+        "punishment": "Up to 3 years imprisonment (first offence); up to 5 years (repeat offence)",
+        "gender_specific": "Women",
+    },
+    {
+        "law_type": "IPC (Old Law)",
+        "section": "IPC §507",
+        "bns_equiv": "BNS §352",
+        "crime": "Criminal Intimidation (Anonymous Threats)",
+        "plain_english": "Someone is sending you threats anonymously — threatening to harm you, your family, or your reputation.",
+        "examples": "Anonymous rape/death threats online; threatening messages from unknown numbers.",
+        "punishment": "Up to 2 years imprisonment",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "IPC (Old Law)",
+        "section": "IPC §509",
+        "bns_equiv": "BNS §79",
+        "crime": "Words or Gestures Insulting a Woman's Modesty",
+        "plain_english": "Someone has used words, sounds, gestures, or objects to insult or humiliate you as a woman.",
+        "examples": "Sexually abusive comments online; obscene voice notes sent on WhatsApp; catcalling via video call.",
+        "punishment": "Up to 3 years imprisonment + fine",
+        "gender_specific": "Women",
+    },
+    {
+        "law_type": "IPC (Old Law)",
+        "section": "IPC §499–500",
+        "bns_equiv": "BNS §356",
+        "crime": "Defamation (Online)",
+        "plain_english": "Someone has published false statements about you online that damage your reputation.",
+        "examples": "False rumours spread on social media; defamatory posts in WhatsApp groups; fake news about you.",
+        "punishment": "Up to 2 years imprisonment + fine",
+        "gender_specific": "All",
+    },
+    # BNS 2023 new provisions
+    {
+        "law_type": "BNS 2023 (New Law)",
+        "section": "BNS §308",
+        "bns_equiv": "New provision",
+        "crime": "Extortion (Online)",
+        "plain_english": "Someone is threatening to expose private information or images unless you pay money or comply with demands.",
+        "examples": "Sextortion: 'Pay me or I will send your photos to your family'; financial extortion after hacking.",
+        "punishment": "Up to 10 years imprisonment + fine",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "BNS 2023 (New Law)",
+        "section": "BNS §351",
+        "bns_equiv": "New provision",
+        "crime": "Criminal Intimidation",
+        "plain_english": "Someone threatens to injure you, your reputation, or your property to force you to do something.",
+        "examples": "Online threats to release private content; doxxing threats; threats to inform employer.",
+        "punishment": "Up to 2 years imprisonment + fine (up to 7 years if threat is of death or grievous hurt)",
+        "gender_specific": "All",
+    },
+    {
+        "law_type": "BNS 2023 (New Law)",
+        "section": "BNS §318",
+        "bns_equiv": "Replaces IPC §420",
+        "crime": "Cheating / Online Fraud",
+        "plain_english": "Someone deceived you online to take money or property from you.",
+        "examples": "Investment scams (Pig Butchering); fake job offers; romance scams; UPI fraud.",
+        "punishment": "Up to 7 years imprisonment + fine",
+        "gender_specific": "All",
+    },
+]
+# ── Apply filters ─────────────────────────────────────────────────────────────
+filtered_laws = LAWS
+
+if law_filter != "All Laws":
+    filtered_laws = [l for l in filtered_laws if l["law_type"] == law_filter]
+
+if crime_search:
+    q = crime_search.lower()
+    filtered_laws = [l for l in filtered_laws if
+        q in l["crime"].lower() or 
+        q in l["plain_english"].lower() or
+        q in l["examples"].lower() or 
+        q in l["section"].lower()
+    ]
+
+# Count text
+st.markdown(f"""
+<p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#8892aa;margin-bottom:0.6rem;">
+  Showing {len(filtered_laws)} of {len(LAWS)} legal provisions
+</p>
+""", unsafe_allow_html=True)
+
+
+# ── Dataframe table (NEW SYSTEM) ──────────────────────────────────────────────
+import pandas as pd
+
+if len(filtered_laws) > 0:
+
+    df_laws = pd.DataFrame(filtered_laws)
+
+    # Combine explanation + examples
+    df_laws["Explanation"] = df_laws["plain_english"] + " | Examples: " + df_laws["examples"]
+
+    display_df = df_laws[[
+        "section",
+        "crime",
+        "Explanation",
+        "punishment",
+        "gender_specific"
+    ]].rename(columns={
+        "section": "Section",
+        "crime": "Crime Type",
+        "punishment": "Punishment",
+        "gender_specific": "Applies To"
+    })
+
+    st.dataframe(
+        display_df,
+        use_container_width=True,
+        height=420
+    )
+
+else:
+    st.warning("No results found. Try a different filter or keyword.")
+
+
+# ── Important note (keep this) ────────────────────────────────────────────────
+st.markdown("""
+<div class="callout amber" style="margin-top:1rem;">
+  <p>&#9888;&#65039; <strong>Important:</strong> Multiple laws can apply to the same incident. For example, 
+  a revenge porn case can be filed under IT Act §67A (sexually explicit material), IPC §354C (voyeurism), 
+  and BNS §308 (extortion) simultaneously. A lawyer or NGO counsellor can help identify which combination 
+  gives the strongest case.</p>
+</div>
+""", unsafe_allow_html=True)
