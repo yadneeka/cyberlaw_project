@@ -347,3 +347,213 @@ st.markdown("""
   gives the strongest case.</p>
 </div>
 """, unsafe_allow_html=True)
+
+
+
+import streamlit as st
+
+
+def top_nav(active_page="dashboard"):
+
+    APP_NAME = "CyberLytics"
+    TAGLINE = "Turning cyberlaw data into actionable insights"
+
+    bg = "#0b1220"
+    text = "#e6edf7"
+    muted = "#94a3b8"
+
+    st.markdown(f"""
+    <style>
+
+    html, body {{
+        background: {bg};
+        color: {text};
+        font-family: 'Inter', sans-serif;
+    }}
+
+    /* ===== GLOBAL CONTAINER ===== */
+    .block-container {{
+        max-width: 1200px !important;
+        padding-top: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }}
+
+    /* ===== NAV WRAPPER ===== */
+    .nav-wrapper {{
+        display: flex;
+        justify-content: center;
+    }}
+
+    /* ===== NAVBAR BOX ===== */
+    .nav-card {{
+        width: 100%;
+        max-width: 1100px;
+
+         height: 35px; 
+
+        margin-bottom: 35px;
+        margin-top: 5px;
+
+        background: rgba(15, 23, 42, 0.95);
+
+        border: 1px solid rgba(255,255,255,0.35);
+        border-radius: 8px;
+
+        box-shadow:
+            0 0 0 1px rgba(255,255,255,0.08),
+            0 12px 30px rgba(0,0,0,0.6);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }}
+
+    /* ===== SECOND BOX (NEW) ===== */
+    .sub-card {{
+        width: 100%;
+        max-width: 1100px;
+
+        height: 35px;  /* adjust if needed */
+
+        margin-bottom: 5px;
+        margin-top: -80px;
+        background: rgba(15, 23, 42, 0.95);
+
+        border: 1px solid rgba(255,255,255,0.35);
+        border-radius: 8px;
+
+        box-shadow:
+            0 0 0 1px rgba(255,255,255,0.08),
+            0 10px 25px rgba(0,0,0,0.5);
+    }}
+
+    /* ===== BRAND ===== */
+    .brand {{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }}
+
+    .brand-name {{
+        font-size: 28px;
+        font-weight: 600;
+    }}
+
+    .brand-tag {{
+        font-size: 20px;
+        color: {muted};
+        margin-top: 4px;
+    }}
+
+    /* ===== NAV LINKS ===== */
+    .nav-links {{
+        display: flex;
+        gap: 20px;
+    }}
+
+    button[kind="secondary"] {{
+        font-size: 18px !important;
+        padding: 12px 22px !important;
+        border-radius: 10px !important;
+
+        background: transparent !important;
+        color: {muted} !important;
+        border: 1px solid transparent !important;
+    }}
+
+    button[kind="secondary"]:hover {{
+        color: {text} !important;
+        background: rgba(255,255,255,0.08) !important;
+    }}
+
+    .active button {{
+        color: {text} !important;
+        background: rgba(255,255,255,0.12) !important;
+        border: 1px solid rgba(255,255,255,0.35) !important;
+    }}
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {{
+
+        .nav-card {{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }}
+
+        .nav-links {{
+            width: 100%;
+            flex-direction: column;
+        }}
+
+        button[kind="secondary"] {{
+            width: 100% !important;
+            text-align: left !important;
+        }}
+
+        .brand-name {{
+            font-size: 22px;
+        }}
+
+       .brand-tag {{
+        font-size: 15px;
+        color: {muted};
+        margin-top: 4px;
+    }}
+    
+    }}
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    # ===== NAVBAR =====
+    st.markdown('<div class="nav-wrapper">', unsafe_allow_html=True)
+    st.markdown('<div class="nav-card">', unsafe_allow_html=True)
+
+    left, right = st.columns([6, 4])
+
+    with left:
+        st.markdown(f"""
+        <div class="brand">
+            <svg width="44" height="44" viewBox="0 0 24 24">
+                <path d="M4 12L12 4L20 12L12 20Z"
+                      stroke="{text}" stroke-width="2" fill="none"/>
+                <circle cx="12" cy="12" r="2.5" fill="{text}"/>
+            </svg>
+            <div>
+                <div class="brand-name">{APP_NAME}</div>
+                <div class="brand-tag">{TAGLINE}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with right:
+
+        st.markdown('<div class="nav-links">', unsafe_allow_html=True)
+
+        c1, c2 = st.columns(2)
+
+        with c1:
+            st.markdown(f'<div class="{"active" if active_page=="dashboard" else ""}">', unsafe_allow_html=True)
+            if st.button("01 ▦ Dashboard"):
+                st.switch_page("app.py")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        with c2:
+            st.markdown(f'<div class="{"active" if active_page=="legal" else ""}">', unsafe_allow_html=True)
+            if st.button("02 🛡 Legal Help"):
+                st.switch_page("pages/2_Legal_Help_Guide.py")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # ===== NEW SECOND BOX =====
+    st.markdown('<div class="nav-wrapper">', unsafe_allow_html=True)
+    st.markdown('<div class="sub-card"></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    return "dark"
